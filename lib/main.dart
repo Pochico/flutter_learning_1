@@ -31,41 +31,60 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool isMainMenuOpen = true;
+
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<PicOfDayModel>(
       future: fetchAlbum(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-              image: NetworkImage(snapshot.data.url),
-              fit: BoxFit.cover,
-            )),
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: SafeArea(
-                child: MainMenu(),
-              ),
+          return Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Stack(
+              children: [
+                animOpacity(isMainMenuOpen, NetworkImage(snapshot.data.url)),
+                animOpacity(
+                    !isMainMenuOpen, AssetImage('assets/images/planet.jpg')),
+                MainMenu(
+                  isMainMenuOpen: isMainMenuOpen,
+                  setState: setStateMainMenu,
+                ),
+              ],
             ),
           );
         } else {
-          return Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-              image: AssetImage('assets/images/planet.jpg'),
-              fit: BoxFit.cover,
-            )),
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: SafeArea(
-                child: MainMenu(),
-              ),
-            ),
-          );
+          return Center(child: CircularProgressIndicator());
         }
       },
+    );
+  }
+
+  void setStateMainMenu() {
+    setState(() {
+      isMainMenuOpen = !isMainMenuOpen;
+    });
+  }
+
+  Widget animOpacity(bool isMainMenuOpen, ImageProvider<Object> imagen) {
+    print(isMainMenuOpen);
+    return AnimatedOpacity(
+      duration: Duration(milliseconds: 700),
+      opacity: isMainMenuOpen ? 0 : 1,
+      child: Stack(children: [
+        Container(
+          //aqui el stack para el texto
+          decoration: BoxDecoration(
+              image: DecorationImage(
+            image: imagen,
+            fit: BoxFit.cover,
+          )),
+        ),
+      ]),
     );
   }
 }

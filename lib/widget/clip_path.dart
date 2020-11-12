@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class CustomClipMenu extends CustomClipper<Path> {
   @override
@@ -12,6 +13,11 @@ class CustomClipMenu extends CustomClipper<Path> {
     path.quadraticBezierTo(size.width / 2, -20, 0, 60);
     return path;
   }
+
+  Paint paint = Paint()
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 10.0
+    ..color = Colors.black;
 
   @override
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
