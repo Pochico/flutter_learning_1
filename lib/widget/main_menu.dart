@@ -39,17 +39,6 @@ class _MainMenuState extends State<MainMenu> {
         height: 350,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-            /*   boxShadow: [
-                        BoxShadow(
-                          color: Colors.red,
-                        ),
-                        BoxShadow(
-                          color: Colors.blue,
-                          spreadRadius: -12.0,
-                          blurRadius: 12.0,
-                          offset: Offset(0, 10),
-                        ),
-                      ],*/ //mejor un borde
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,

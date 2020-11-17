@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class AsteroidsModel {
   final Links links;
   final List<NearEarthObjects> nearEarthObjects;

@@ -3,9 +3,10 @@ import 'package:nasa_app/model/pic_of_day_model.dart';
 import 'dart:async';
 import 'dart:convert';
 
-Future<PicOfDayModel> fetchAlbum() async {
+Future<PicOfDayModel> fetchAlbum(String fecha) async {
   final response = await http.get(
-      'https://api.nasa.gov/planetary/apod?api_key=HcGWTXWUhVT7HsEI9OkttaomUjyHHGP6ChRGUCne');
+      'https://api.nasa.gov/planetary/apod?date=$fecha&api_key=HcGWTXWUhVT7HsEI9OkttaomUjyHHGP6ChRGUCne');
+  // Aplicar date=&
 
   if (response.statusCode == 200) {
     var respuesta = PicOfDayModel.fromJson(jsonDecode(response.body));
