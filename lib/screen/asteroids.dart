@@ -14,7 +14,7 @@ class _AsteroidsState extends State<Asteroids> {
     return Scaffold(
       body: SafeArea(
         child: FutureBuilder<AsteroidsModel>(
-          future: fetchAsteroids(3),
+          future: fetchAsteroids(1),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               var asteroids = snapshot.data;

@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.amber,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
@@ -110,8 +110,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ? isTodayDate = true
           : isTodayDate = false;
     });
-    print(isTodayDate);
-    print(today.compareTo(currentDayUtc));
   }
 
   Widget animOpacity(bool isMainMenuOpen, ImageProvider<Object> imagen,
@@ -159,11 +157,22 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 SizedBox(height: 12),
+                Text(
+                  currentDayString,
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    height: 1.5,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 12),
                 Icon(
                   Icons.keyboard_arrow_down,
                   color: Colors.white,
                   size: 40,
-                  semanticLabel: 'Text to announce in accessibility modes',
                 ),
               ],
             ),

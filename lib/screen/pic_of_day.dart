@@ -23,7 +23,7 @@ class _PicOfDayState extends State<PicOfDay> {
           child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: FutureBuilder<PicOfDayModel>(
-                future: fetchAlbum('2020-11-13'),
+                future: fetchAlbum('2020-11-10'),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Column(
@@ -47,7 +47,6 @@ class _PicOfDayState extends State<PicOfDay> {
                         SizedBox(height: 12),
                         Image.network(snapshot.data.hdurl),
                         SizedBox(height: 12),
-                        // Añadir la descripción completa.
                       ],
                     );
                   } else if (snapshot.hasError) {

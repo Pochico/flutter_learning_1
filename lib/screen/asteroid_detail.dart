@@ -11,10 +11,10 @@ class AsteroidDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Asteroid Details - ' + title), //Aquí podría ir el title
+        title: Text('Asteroid Details - ' + title),
         backgroundColor: Colors.amber,
         leading: IconButton(
-          icon: Icon(Icons.ac_unit_rounded),
+          icon: Icon(Icons.keyboard_arrow_left),
           onPressed: () => Navigator.pop(context),
         ),
       ),

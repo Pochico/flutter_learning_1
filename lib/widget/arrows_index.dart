@@ -11,23 +11,23 @@ class ArrowsIndex extends StatelessWidget {
       child: Container(
         height: 40,
         width: 40,
-        decoration: BoxDecoration(
-          color: Colors.orangeAccent,
-          borderRadius: BorderRadius.circular(45),
-          image: isPreviousArrow
-              ? DecorationImage(
-                  image: AssetImage('assets/images/left_arrow.png'))
-              : DecorationImage(
-                  image: AssetImage('assets/images/right_arrow.png')),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.orangeAccent.withOpacity(0.6),
-              spreadRadius: 3,
-              blurRadius: 6,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
+        // decoration: BoxDecoration(
+        //     borderRadius: BorderRadius.circular(50),
+        //     border: Border.all(
+        //       color: Colors.white,
+        //       width: 2,
+        //     )),
+        child: isPreviousArrow
+            ? Icon(
+                Icons.keyboard_arrow_left,
+                color: Colors.white,
+                size: 40,
+              )
+            : Icon(
+                Icons.keyboard_arrow_right,
+                color: Colors.white,
+                size: 40,
+              ),
       ),
     );
   }

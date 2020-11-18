@@ -39,34 +39,15 @@ class _MainMenuState extends State<MainMenu> {
         height: 350,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+            gradient: RadialGradient(
+                center: Alignment.bottomCenter,
+                radius: 1,
                 colors: [
-              Color.fromRGBO(164, 80, 0, 0.8),
               Color.fromRGBO(0, 0, 0, 0.3),
+              Color.fromRGBO(164, 80, 0, .9),
             ])),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          ButtonTheme(
-            minWidth: 140,
-            child: RaisedButton(
-              color: Colors.amberAccent,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18),
-              ),
-              child: Text(
-                'Foto del dia',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => PicOfDay()),
-              ),
-            ),
-          ),
+          mainMenuNavigationButton('Foto del día'),
           ButtonTheme(
             minWidth: 140,
             child: RaisedButton(
@@ -117,20 +98,41 @@ class _MainMenuState extends State<MainMenu> {
       child: Container(
         width: 48,
         height: 48,
+        child: Icon(Icons.keyboard_arrow_up, size: 40, color: Colors.white),
         decoration: BoxDecoration(
           color: Colors.orangeAccent,
           borderRadius: BorderRadius.circular(100),
-          image: DecorationImage(
-            image: AssetImage('assets/images/up_menu.png'),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.orangeAccent.withOpacity(0.6),
-              spreadRadius: 3,
-              blurRadius: 6,
-              offset: Offset(0, 2), // changes position of shadow
-            ),
-          ],
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: Colors.orangeAccent.withOpacity(0.6),
+          //     spreadRadius: 3,
+          //     blurRadius: 6,
+          //     offset: Offset(0, 2), // changes position of shadow
+          //   ),
+          // ],
+        ),
+      ),
+    );
+  }
+
+  Widget mainMenuNavigationButton(String titulo) {
+    return ButtonTheme(
+      minWidth: 140,
+      child: RaisedButton(
+        color: Color(0xFF17161b),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18),
+        ),
+        child: Text(
+          titulo,
+          style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFFf2c902)),
+        ),
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => PicOfDay()),
         ),
       ),
     );
