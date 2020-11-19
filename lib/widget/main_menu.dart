@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:nasa_app/screen/asteroids.dart';
 import 'package:nasa_app/screen/pic_of_day.dart';
 import 'package:nasa_app/screen/rover_mars.dart';
@@ -47,46 +48,9 @@ class _MainMenuState extends State<MainMenu> {
               Color.fromRGBO(164, 80, 0, .9),
             ])),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          mainMenuNavigationButton('Foto del día'),
-          ButtonTheme(
-            minWidth: 140,
-            child: RaisedButton(
-              color: Colors.blueAccent,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18),
-              ),
-              child: Text(
-                'Rover de Marte',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => RoverMars()),
-              ),
-            ),
-          ),
-          ButtonTheme(
-            minWidth: 140,
-            child: RaisedButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18)),
-              color: Colors.orangeAccent,
-              child: Text(
-                'Asteroides',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Asteroids()),
-              ),
-            ),
-          )
+          mainMenuNavigationButton('Foto del día', PicOfDay()),
+          mainMenuNavigationButton('Rover de Marte', RoverMars()),
+          mainMenuNavigationButton('Asteroides', Asteroids()),
         ]),
       ),
     );
@@ -96,9 +60,17 @@ class _MainMenuState extends State<MainMenu> {
     return GestureDetector(
       onVerticalDragStart: (i) => {widget.setState()},
       child: Container(
+        alignment: Alignment.center,
         width: 48,
         height: 48,
-        child: Icon(Icons.keyboard_arrow_up, size: 40, color: Colors.white),
+        child: Icon(
+            widget.isMainMenuOpen
+                ? Icons.keyboard_arrow_down
+                : Icons.keyboard_arrow_up,
+            size: 40,
+            color: Colors.white),
+
+        // Center(child: Lottie.asset('assets/animations/arrow.json')),
         decoration: BoxDecoration(
           color: Colors.orangeAccent,
           borderRadius: BorderRadius.circular(100),
@@ -115,7 +87,7 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
-  Widget mainMenuNavigationButton(String titulo) {
+  Widget mainMenuNavigationButton(String titulo, Widget widget) {
     return ButtonTheme(
       minWidth: 140,
       child: RaisedButton(
@@ -132,7 +104,7 @@ class _MainMenuState extends State<MainMenu> {
         ),
         onPressed: () => Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => PicOfDay()),
+          MaterialPageRoute(builder: (context) => widget),
         ),
       ),
     );

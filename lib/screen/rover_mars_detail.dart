@@ -7,12 +7,36 @@ class RoverMarsDetail extends StatelessWidget {
   final RoverMarsModel roverItemDetailed;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Image(
-            image: NetworkImage(
-          roverItemDetailed.imgSrc,
-        )),
+    return SafeArea(
+      child: Container(
+        child: Column(children: [
+          SizedBox(height: 20),
+          Image(
+              image: NetworkImage(
+            roverItemDetailed.imgSrc,
+          )),
+          SizedBox(height: 20),
+          Text(
+            roverItemDetailed.earthDate,
+            style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                decoration: TextDecoration.none),
+          ),
+          SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14),
+            child: Text(
+              roverItemDetailed.camera.fullName,
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  decoration: TextDecoration.none),
+            ),
+          )
+        ]),
       ),
     );
   }
