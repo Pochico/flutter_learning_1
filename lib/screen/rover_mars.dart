@@ -1,10 +1,13 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:nasa_app/constant/colors.dart';
 import 'package:nasa_app/model/rover_mars_model.dart';
 import 'package:nasa_app/repository/rover_mars_repository.dart';
 import 'package:nasa_app/screen/rover_mars_detail.dart';
 import 'package:nasa_app/widget/clip_path.dart';
+
+final colorBase = PRIMARY_COLOR.withOpacity(.5);
 
 class RoverMars extends StatefulWidget {
   RoverMars({Key key}) : super(key: key);
@@ -96,7 +99,6 @@ class _RoverMarsState extends State<RoverMars> {
             return Text("${snapshot.error}");
           }
 
-          // By default, show a loading spinner.
           return Center(child: CircularProgressIndicator());
         },
       )),
@@ -109,7 +111,7 @@ class _RoverMarsState extends State<RoverMars> {
           height: 60,
           width: 60,
           decoration: BoxDecoration(
-            color: Colors.black.withOpacity(.5),
+            color: PRIMARY_COLOR,
             borderRadius: BorderRadius.circular(100.0),
           ),
           child: Icon(Icons.calendar_today_outlined,
@@ -132,34 +134,44 @@ class _RoverMarsState extends State<RoverMars> {
         });
   }
 
-  Widget gridCounterButtons(bool operation) {
+  Widget gridCounterButtons(bool isRight) {
     return GestureDetector(
-        onTap: () => changeGridCounter(operation),
+        onTap: () => changeGridCounter(isRight),
         child: Container(
-            alignment:
-                operation ? Alignment(0.5, -0.05) : Alignment(-0.5, -0.05),
-            width: 40,
-            height: 80,
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(.5),
-              borderRadius: operation
-                  ? BorderRadius.only(
-                      topLeft: Radius.circular(100),
-                      bottomLeft: Radius.circular(100),
-                    )
-                  : BorderRadius.only(
-                      topRight: Radius.circular(100),
-                      bottomRight: Radius.circular(100),
-                    ),
-            ),
-            child: Text(
-              operation ? '+' : '-',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFFf2c902),
-              ),
-            )));
+          color: Colors.transparent,
+          child: Padding(
+            padding: EdgeInsets.only(
+                left: isRight ? 24 : 0,
+                right: isRight ? 0 : 24,
+                top: 16,
+                bottom: 16),
+            child: Container(
+                alignment:
+                    isRight ? Alignment(0.5, -0.05) : Alignment(-0.5, -0.05),
+                width: 20,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: colorBase,
+                  borderRadius: isRight
+                      ? BorderRadius.only(
+                          topLeft: Radius.circular(100),
+                          bottomLeft: Radius.circular(100),
+                        )
+                      : BorderRadius.only(
+                          topRight: Radius.circular(100),
+                          bottomRight: Radius.circular(100),
+                        ),
+                ),
+                child: Text(
+                  isRight ? '+' : '-',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFf2c902),
+                  ),
+                )),
+          ),
+        ));
   }
 
   Widget roverMarsHeader() {
@@ -168,8 +180,8 @@ class _RoverMarsState extends State<RoverMars> {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
         child: Container(
-          color: Colors.black.withOpacity(.5),
-          height: 110,
+          color: colorBase,
+          height: 125,
           width: double.infinity,
           child: Column(
             children: [

@@ -37,17 +37,14 @@ class Links {
 }
 
 class NearEarthObjects {
-  String id;
-  String nameLimited;
-  bool hazard;
-  List<CloseApproach> closeApproach;
+  final String id;
+  final String nameLimited;
+  final bool hazard;
+  final List<CloseApproach> closeApproach;
+  final AsteroidSize size;
 
-  NearEarthObjects({
-    this.id,
-    this.nameLimited,
-    this.hazard,
-    this.closeApproach,
-  });
+  NearEarthObjects(
+      {this.id, this.nameLimited, this.hazard, this.closeApproach, this.size});
 
   factory NearEarthObjects.fromJson(Map<String, dynamic> json) {
     List<dynamic> listCloseApproachData = json['close_approach_data'];
@@ -55,17 +52,41 @@ class NearEarthObjects {
         listCloseApproachData.map((i) => CloseApproach.fromJson(i)).toList();
 
     return NearEarthObjects(
-      id: json['id'],
-      nameLimited: json['name_limited'],
-      hazard: json['is_potentially_hazardous_asteroid'],
-      closeApproach: listCloseApproach,
-    );
+        id: json['id'],
+        nameLimited: json['name_limited'],
+        hazard: json['is_potentially_hazardous_asteroid'],
+        closeApproach: listCloseApproach,
+        size: AsteroidSize.fromJson(json['estimated_diameter']));
+  }
+}
+
+class AsteroidSize {
+  final MinMaxDiameter kmDiameter;
+
+  AsteroidSize({this.kmDiameter});
+
+  factory AsteroidSize.fromJson(Map<String, dynamic> json) {
+    return AsteroidSize(
+        kmDiameter: MinMaxDiameter.fromJson(json['kilometers']));
+  }
+}
+
+class MinMaxDiameter {
+  final int maxDiameter;
+  final int minDiameter;
+
+  MinMaxDiameter({this.maxDiameter, this.minDiameter});
+
+  factory MinMaxDiameter.fromJson(Map<int, dynamic> json) {
+    return MinMaxDiameter(
+        maxDiameter: json['estimated_diameter_min'],
+        minDiameter: json['estimated_diameter_min']);
   }
 }
 
 class CloseApproach {
-  String closeApproachDate;
-  String closeApproachDateFull;
+  final String closeApproachDate;
+  final String closeApproachDateFull;
 
   CloseApproach({
     this.closeApproachDate,

@@ -19,6 +19,7 @@ class _AsteroidsState extends State<Asteroids> {
             if (snapshot.hasData) {
               var asteroids = snapshot.data;
               var nearEarthObjects = asteroids.nearEarthObjects;
+              print(nearEarthObjects[1].size.kmDiameter.maxDiameter);
               return ListView.builder(
                   padding: const EdgeInsets.all(8),
                   itemCount: snapshot.data.nearEarthObjects.length,
@@ -32,12 +33,15 @@ class _AsteroidsState extends State<Asteroids> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => AsteroidDetail(
-                                              closeApproachList:
-                                                  nearEarthObjects[index]
-                                                      .closeApproach,
-                                              title: nearEarthObjects[index]
-                                                  .nameLimited,
-                                            )));
+                                            closeApproachList:
+                                                nearEarthObjects[index]
+                                                    .closeApproach,
+                                            title: nearEarthObjects[index]
+                                                .nameLimited,
+                                            size: nearEarthObjects[index]
+                                                .size
+                                                .kmDiameter
+                                                .maxDiameter)));
                               },
                               color: Colors.amber,
                               minWidth: 140,

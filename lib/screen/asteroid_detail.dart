@@ -3,10 +3,15 @@ import 'package:nasa_app/model/asteroids_model.dart';
 
 class AsteroidDetail extends StatelessWidget {
   const AsteroidDetail(
-      {Key key, @required this.closeApproachList, @required this.title})
+      {Key key,
+      @required this.closeApproachList,
+      @required this.size,
+      @required this.title})
       : super(key: key);
   final String title;
   final List<CloseApproach> closeApproachList;
+  final int size;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,8 +32,7 @@ class AsteroidDetail extends StatelessWidget {
                   children: [
                     SizedBox(height: 32),
                     Text(
-                      'Fecha de aproximación: ' +
-                          closeApproachList[index].closeApproachDate,
+                      'Tamaño del asteroide: ' + size.toString(),
                       style: TextStyle(),
                     ),
                     SizedBox(height: 10),

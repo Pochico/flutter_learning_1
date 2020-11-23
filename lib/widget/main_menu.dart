@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+// import 'package:lottie/lottie.dart';
+import 'package:nasa_app/constant/colors.dart';
+import 'package:nasa_app/screen/asteroid_graphs.dart';
 import 'package:nasa_app/screen/asteroids.dart';
-import 'package:nasa_app/screen/pic_of_day.dart';
 import 'package:nasa_app/screen/rover_mars.dart';
 import 'package:nasa_app/widget/clip_path.dart';
 
@@ -48,9 +49,10 @@ class _MainMenuState extends State<MainMenu> {
               Color.fromRGBO(164, 80, 0, .9),
             ])),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          mainMenuNavigationButton('Foto del día', PicOfDay()),
+          // mainMenuNavigationButton('Foto del día', PicOfDay()),
           mainMenuNavigationButton('Rover de Marte', RoverMars()),
           mainMenuNavigationButton('Asteroides', Asteroids()),
+          mainMenuNavigationButton('Gráficas de asteroides', AsteroidGraphs()),
         ]),
       ),
     );
@@ -72,7 +74,7 @@ class _MainMenuState extends State<MainMenu> {
 
         // Center(child: Lottie.asset('assets/animations/arrow.json')),
         decoration: BoxDecoration(
-          color: Colors.orangeAccent,
+          color: PRIMARY_COLOR,
           borderRadius: BorderRadius.circular(100),
           // boxShadow: [
           //   BoxShadow(
