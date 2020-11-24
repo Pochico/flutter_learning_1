@@ -61,26 +61,25 @@ class NearEarthObjects {
 }
 
 class AsteroidSize {
-  final MinMaxDiameter kmDiameter;
+  final Diameters kmDiameter;
 
   AsteroidSize({this.kmDiameter});
 
   factory AsteroidSize.fromJson(Map<String, dynamic> json) {
-    return AsteroidSize(
-        kmDiameter: MinMaxDiameter.fromJson(json['kilometers']));
+    return AsteroidSize(kmDiameter: Diameters.fromJson(json['kilometers']));
   }
 }
 
-class MinMaxDiameter {
+class Diameters {
   final int maxDiameter;
   final int minDiameter;
 
-  MinMaxDiameter({this.maxDiameter, this.minDiameter});
+  Diameters({this.maxDiameter, this.minDiameter});
 
-  factory MinMaxDiameter.fromJson(Map<int, dynamic> json) {
-    return MinMaxDiameter(
+  factory Diameters.fromJson(Map<int, dynamic> json) {
+    return Diameters(
         maxDiameter: json['estimated_diameter_min'],
-        minDiameter: json['estimated_diameter_min']);
+        minDiameter: json['estimated_diameter_max']);
   }
 }
 

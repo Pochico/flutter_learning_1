@@ -9,17 +9,27 @@ class Asteroids extends StatefulWidget {
 }
 
 class _AsteroidsState extends State<Asteroids> {
+  String currentDayString;
+  String endDayString;
+  DateTime currentDay = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    fechaActual(currentDay);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: FutureBuilder<AsteroidsModel>(
-          future: fetchAsteroids(1),
+          future: fetchAsteroids(1, currentDayString, endDayString),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               var asteroids = snapshot.data;
               var nearEarthObjects = asteroids.nearEarthObjects;
-              print(nearEarthObjects[1].size.kmDiameter.maxDiameter);
+              // print(nearEarthObjects[1].size.kmDiameter.maxDiameter);
               return ListView.builder(
                   padding: const EdgeInsets.all(8),
                   itemCount: snapshot.data.nearEarthObjects.length,
@@ -33,15 +43,16 @@ class _AsteroidsState extends State<Asteroids> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => AsteroidDetail(
-                                            closeApproachList:
-                                                nearEarthObjects[index]
-                                                    .closeApproach,
-                                            title: nearEarthObjects[index]
-                                                .nameLimited,
-                                            size: nearEarthObjects[index]
-                                                .size
-                                                .kmDiameter
-                                                .maxDiameter)));
+                                              closeApproachList:
+                                                  nearEarthObjects[index]
+                                                      .closeApproach,
+                                              title: nearEarthObjects[index]
+                                                  .nameLimited,
+                                              // size: nearEarthObjects[index]
+                                              //     .size
+                                              //     .kmDiameter
+                                              //     .maxDiameter,
+                                            )));
                               },
                               color: Colors.amber,
                               minWidth: 140,
@@ -61,5 +72,21 @@ class _AsteroidsState extends State<Asteroids> {
         ),
       ),
     );
+  }
+
+  void fechaActual(DateTime currentDay) {
+    int startYear = currentDay.year;
+    int startMonth = currentDay.month;
+    int startDay = currentDay.day;
+
+    DateTime fechaFinal = currentDay.add(Duration(days: 1));
+    int endYear = fechaFinal.year;
+    int endMonth = fechaFinal.month;
+    int endDay = fechaFinal.day;
+
+    setState(() {
+      currentDayString = '$startYear-$startMonth-$startDay';
+      endDayString = '$endYear-$endMonth-$endDay';
+    });
   }
 }
