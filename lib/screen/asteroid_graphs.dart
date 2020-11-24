@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graphic/graphic.dart' as graphic;
+import 'package:flutter_echarts/flutter_echarts.dart';
 
 class AsteroidGraphs extends StatefulWidget {
   @override
@@ -10,36 +10,45 @@ class _AsteroidGraphsState extends State<AsteroidGraphs> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
-          child: Padding(
-              padding: const EdgeInsets.all(32),
-              child: graphic.Chart(
-                data: [
-                  {'name': 'Sports', 'size': 205},
-                  {'name': 'Strategy', 'size': 115},
-                  {'name': 'Action', 'size': 1120},
-                  {'name': 'Shooter', 'size': 350},
-                  {'name': 'Other', 'size': 130},
-                ],
-                scales: {
-                  'name': graphic.CatScale(
-                    accessor: (map) => map['name'] as String,
-                  ),
-                  'size': graphic.LinearScale(
-                    accessor: (map) => map['size'] as num,
-                    nice: false,
-                  )
-                },
-                geoms: [
-                  graphic.IntervalGeom(
-                    position: graphic.PositionAttr(field: 'name*size'),
-                  )
-                ],
-                axes: {
-                  'name': graphic.Defaults.horizontalAxis,
-                  'size': graphic.Defaults.verticalAxis,
-                },
-              ))),
+      child: Echarts(
+        option: '''
+    {
+      title: {
+        text: 'Ejemplo 1',
+        top: 50,
+        left: 'center'
+    },
+    legend: {
+      type: 'plain',
+      icon: 'circle',
+      top: 150
+    },
+    tooltip: {
+      trigger: 'item',
+      position: ['35%', '80%']
+    },
+    series: [
+        {
+            name: 'Serie de datos 1',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '50%'],
+            data: [
+                {value: 335, name: 'Uno'},
+                {value: 310, name: 'Dos'},
+                {value: 274, name: 'Tres'},
+                {value: 235, name: 'Cuatro'},
+                {value: 400, name: 'Cinco'}
+            ],
+            labelLine: {
+                smooth: 0.2,
+                length: 10,
+                length2: 20
+            },
+        }
+    ]}
+  ''',
+      ),
     );
   }
 }
