@@ -29,7 +29,7 @@ class _AsteroidsState extends State<Asteroids> {
             if (snapshot.hasData) {
               var asteroids = snapshot.data;
               var nearEarthObjects = asteroids.nearEarthObjects;
-              // print(nearEarthObjects[1].size.kmDiameter.maxDiameter);
+              print(nearEarthObjects[1].asteroidSize.kmDiameter.maxDiameter);
               return ListView.builder(
                   padding: const EdgeInsets.all(8),
                   itemCount: snapshot.data.nearEarthObjects.length,
@@ -48,10 +48,10 @@ class _AsteroidsState extends State<Asteroids> {
                                                       .closeApproach,
                                               title: nearEarthObjects[index]
                                                   .nameLimited,
-                                              // size: nearEarthObjects[index]
-                                              //     .size
-                                              //     .kmDiameter
-                                              //     .maxDiameter,
+                                              size: nearEarthObjects[index]
+                                                  .asteroidSize
+                                                  .kmDiameter
+                                                  .maxDiameter,
                                             )));
                               },
                               color: Colors.amber,
@@ -60,9 +60,6 @@ class _AsteroidsState extends State<Asteroids> {
                                   Text(nearEarthObjects[index].nameLimited))),
                     );
                   });
-              // Text(snapshot.data.nearEarthObjects[0].closeApproach[0]
-              //     .close_approach_date),
-
             } else {
               return Center(
                   child: Text(

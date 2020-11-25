@@ -52,7 +52,7 @@ class _MainMenuState extends State<MainMenu> {
           // mainMenuNavigationButton('Foto del día', PicOfDay()),
           mainMenuNavigationButton('Rover de Marte', RoverMars()),
           mainMenuNavigationButton('Asteroides', Asteroids()),
-          mainMenuNavigationButton('Gráficas de asteroides', AsteroidGraphs()),
+          mainMenuNavigationButton('Gráficas de asteroides', AsteroidGraph()),
         ]),
       ),
     );
@@ -71,19 +71,10 @@ class _MainMenuState extends State<MainMenu> {
                 : Icons.keyboard_arrow_up,
             size: 40,
             color: Colors.white),
-
         // Center(child: Lottie.asset('assets/animations/arrow.json')),
         decoration: BoxDecoration(
           color: PRIMARY_COLOR,
           borderRadius: BorderRadius.circular(100),
-          // boxShadow: [
-          //   BoxShadow(
-          //     color: Colors.orangeAccent.withOpacity(0.6),
-          //     spreadRadius: 3,
-          //     blurRadius: 6,
-          //     offset: Offset(0, 2), // changes position of shadow
-          //   ),
-          // ],
         ),
       ),
     );

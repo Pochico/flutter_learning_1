@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nasa_app/repository/pic_of_day_repository.dart';
 import 'package:nasa_app/model/pic_of_day_model.dart';
 import 'package:nasa_app/widget/arrows_index.dart';
+import 'package:nasa_app/utils/date.dart';
 
 class PicOfDay extends StatefulWidget {
   PicOfDay({Key key}) : super(key: key);
@@ -18,7 +19,10 @@ class _PicOfDayState extends State<PicOfDay> {
   @override
   void initState() {
     super.initState();
-    fechaActual(currentDay);
+    dateTimeToString(currentDay);
+    setState(() {
+      currentDayString = dateTimeToString(currentDay);
+    });
   }
 
   @override
@@ -103,43 +107,33 @@ class _PicOfDayState extends State<PicOfDay> {
       alignment: direccionFlecha ? Alignment.centerLeft : Alignment.centerRight,
       child: direccionFlecha
           ? GestureDetector(
-              onTap: () => changeDate(currentDay, false),
+              onTap: () => changeDateSub(currentDay),
               child: ArrowsIndex(isPreviousArrow: true))
           : GestureDetector(
-              onTap: () => changeDate(currentDay, true),
+              onTap: () => changeDateAdd(currentDay),
               child: ArrowsIndex(isPreviousArrow: false)),
     );
   }
 
-  changeDate(DateTime newDate, bool sum) {
-    newDate = sum
-        ? newDate.add(Duration(days: 1))
-        : newDate.subtract(Duration(days: 1));
-    fechaActual(newDate);
+  changeDateSub(DateTime dateToChange) {
+    comparisonDateSetState(subDay(dateToChange));
     setState(() {
-      currentDay = newDate;
-    });
-    compareDate();
-  }
-
-  void fechaActual(DateTime currentDay) {
-    int anoActual = currentDay.year;
-    int mesActual = currentDay.month;
-    int diaActual = currentDay.day;
-    setState(() {
-      currentDayString = '$anoActual-$mesActual-$diaActual';
+      currentDay = subDay(dateToChange);
+      currentDayString = dateTimeToString(currentDay);
     });
   }
 
-  compareDate() {
-    int yearToday = DateTime.now().year;
-    int monthToday = DateTime.now().month;
-    int dayToday = DateTime.now().day;
-    DateTime today = DateTime.utc(yearToday, monthToday, dayToday);
-    DateTime currentDayUtc =
-        DateTime.utc(currentDay.year, currentDay.month, currentDay.day);
+  changeDateAdd(DateTime dateToChange) {
+    comparisonDateSetState(addDay(dateToChange));
     setState(() {
-      today.compareTo(currentDayUtc) == 0
+      currentDay = addDay(dateToChange);
+      currentDayString = dateTimeToString(currentDay);
+    });
+  }
+
+  comparisonDateSetState(DateTime dateToCompare) {
+    setState(() {
+      compareDate(dateToCompare, isTodayDate)
           ? isTodayDate = true
           : isTodayDate = false;
     });

@@ -5,12 +5,12 @@ class AsteroidDetail extends StatelessWidget {
   const AsteroidDetail(
       {Key key,
       @required this.closeApproachList,
-      // @required this.size,
+      @required this.size,
       @required this.title})
       : super(key: key);
   final String title;
   final List<CloseApproach> closeApproachList;
-  // final String size;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class AsteroidDetail extends StatelessWidget {
                   children: [
                     SizedBox(height: 32),
                     Text(
-                      'Tamaño del asteroide: ' /*+ size.toString()*/,
+                      'Tamaño del asteroide: ' + size.toString(),
                       style: TextStyle(),
                     ),
                     SizedBox(height: 10),
