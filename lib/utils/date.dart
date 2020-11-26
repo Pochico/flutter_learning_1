@@ -8,17 +8,17 @@ String dateTimeToString(DateTime currentDay) {
   return '$anoActual-$mesActual-$diaActual';
 }
 
-DateTime addDay(DateTime newDate) {
-  newDate.add(Duration(days: 1));
-  return newDate;
-}
-
 DateTime subDay(DateTime newDate) {
   newDate = newDate.subtract(Duration(days: 1));
   return newDate;
 }
 
-bool compareDate(DateTime currentDay, bool isTodayDate) {
+DateTime addDay(DateTime newDate) {
+  newDate.add(Duration(days: 1));
+  return newDate;
+}
+
+bool compareDate(DateTime currentDay) {
   DateTime currentDayUtc =
       DateTime.utc(currentDay.year, currentDay.month, currentDay.day);
 

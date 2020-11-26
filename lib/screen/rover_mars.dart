@@ -35,7 +35,6 @@ class _RoverMarsState extends State<RoverMars> {
     });
   }
 
-  void parsearFecha(DateTime currentDay) {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(

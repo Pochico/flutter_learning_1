@@ -133,9 +133,7 @@ class _PicOfDayState extends State<PicOfDay> {
 
   comparisonDateSetState(DateTime dateToCompare) {
     setState(() {
-      compareDate(dateToCompare, isTodayDate)
-          ? isTodayDate = true
-          : isTodayDate = false;
+      compareDate(dateToCompare) ? isTodayDate = true : isTodayDate = false;
     });
   }
 }
