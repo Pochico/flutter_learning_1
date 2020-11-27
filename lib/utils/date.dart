@@ -8,13 +8,13 @@ String dateTimeToString(DateTime currentDay) {
   return '$anoActual-$mesActual-$diaActual';
 }
 
-DateTime subDay(DateTime newDate) {
-  newDate = newDate.subtract(Duration(days: 1));
+DateTime subDay(DateTime date) {
+  var newDate = date.subtract(Duration(days: 1));
   return newDate;
 }
 
-DateTime addDay(DateTime newDate) {
-  newDate.add(Duration(days: 1));
+DateTime addDay(DateTime date) {
+  var newDate = date.add(Duration(days: 1));
   return newDate;
 }
 
@@ -28,8 +28,17 @@ bool compareDate(DateTime currentDay) {
   DateTime today = DateTime.utc(yearToday, monthToday, dayToday);
 
   final bool comparison = today.compareTo(currentDayUtc) == 0;
-  print('comparison');
-  print(comparison);
 
   return comparison;
+}
+
+void datePicker(BuildContext context, Function setState, DateTime currentDay) {
+  showDatePicker(
+          context: context,
+          initialDate: currentDay,
+          firstDate: DateTime(2013),
+          lastDate: DateTime.now())
+      .then((date) {
+    setState(date);
+  });
 }

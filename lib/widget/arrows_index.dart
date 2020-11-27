@@ -17,17 +17,13 @@ class ArrowsIndex extends StatelessWidget {
         //       color: Colors.white,
         //       width: 2,
         //     )),
-        child: isPreviousArrow
-            ? Icon(
-                Icons.keyboard_arrow_left,
-                color: Colors.white,
-                size: 40,
-              )
-            : Icon(
-                Icons.keyboard_arrow_right,
-                color: Colors.white,
-                size: 40,
-              ),
+        child: Icon(
+          isPreviousArrow
+              ? Icons.keyboard_arrow_left
+              : Icons.keyboard_arrow_right,
+          color: Colors.white,
+          size: 40,
+        ),
       ),
     );
   }
