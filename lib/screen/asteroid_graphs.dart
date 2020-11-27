@@ -17,39 +17,46 @@ class _AsteroidGraphState extends State {
   String fetchedEndDate;
 
   int touchedIndex;
-
   Color greyColor = Colors.grey;
-
   List<int> selectedSpots = [];
-  List<double> asteroidesEjeX = [0, 1, 2, 3];
+  //List<double> asteroidesEjeX = [0, 1, 2, 3];
   // List<double> asteroidesEjeY = [7, 7, 7, 7, 4, 4, 4, 4];
   List<Color> colorList = [
     ASTEROID_COLOR_1,
     ASTEROID_COLOR_2,
     ASTEROID_COLOR_3,
     ASTEROID_COLOR_4,
+    ASTEROID_COLOR_2,
+    ASTEROID_COLOR_2,
+    ASTEROID_COLOR_2,
+    ASTEROID_COLOR_2,
+    ASTEROID_COLOR_2,
+    ASTEROID_COLOR_2,
   ];
 
   List<ScatterSpot> readyToUseAsteroidList;
-
   int lastPanStartOnIndex = -1;
+
+  bool soyElPlanetaTal = false;
 
   @override
   void initState() {
     super.initState();
     fetchedStartDate = dateTimeToString(currentDay);
     fetchedEndDate = dateTimeToString(addDay(currentDay));
-    readyToUseAsteroidList = asteroidList();
   }
 
-  List<ScatterSpot> asteroidList(List<NearEarthObjects> asteroids) {
-    var loQueRetorna = asteroidesEjeX
-        .map(
-          (e) => ScatterSpot((e + 1) * 2, (e + 1) * 2,
-              color: colorList[e.toInt()], radius: (e + 1) * 3),
-        )
+  void asteroidList(List<NearEarthObjects> asteroids) {
+    var loQueRetorna = asteroids
+        .asMap()
+        .map((index, e) => MapEntry(
+            index,
+            ScatterSpot((index.toDouble() + 1), (1),
+                color: colorList[index],
+                radius: (e.asteroidSize.kmDiameter.maxDiameter))))
+        .values
         .toList();
-    return loQueRetorna;
+    readyToUseAsteroidList = loQueRetorna;
   }
 
   @override
@@ -66,36 +73,24 @@ class _AsteroidGraphState extends State {
                   var nearEarthObjects = asteroids.nearEarthObjects;
                   asteroidList(nearEarthObjects);
                   return AspectRatio(
-                    aspectRatio: 1,
+                    aspectRatio: 3,
                     child: Card(
-                      color: const Color(0xff222222),
+                      color: PRIMARY_COLOR,
                       child: ScatterChart(
                         ScatterChartData(
                           scatterSpots: [
                             ...readyToUseAsteroidList,
-                            //    ScatterSpot(
-                            //   2,
-                            //   5,
-                            //   color: selectedSpots.contains(1)
-                            //       ? Colors.yellow
-                            //       : greyColor,
-                            //   radius: nearEarthObjects[1]
-                            //           .asteroidSize
-                            //           .kmDiameter
-                            //           .maxDiameter *
-                            //       2,
-                            // ),
                           ],
                           minX: 0,
-                          maxX: 10,
+                          maxX: 11,
                           minY: 0,
-                          maxY: 10,
+                          maxY: 2,
                           borderData: FlBorderData(
                             show: false,
                           ),
                           gridData: FlGridData(
-                            show: true,
-                            drawHorizontalLine: true,
+                            show: false,
+                            drawHorizontalLine: false,
                             checkToShowHorizontalLine: (value) => true,
                             getDrawingHorizontalLine: (value) =>
                                 FlLine(color: Colors.white.withOpacity(0.05)),
@@ -112,7 +107,7 @@ class _AsteroidGraphState extends State {
                             enabled: true,
                             handleBuiltInTouches: false,
                             touchTooltipData: ScatterTouchTooltipData(
-                              tooltipBgColor: Colors.black,
+                              tooltipBgColor: Colors.amber,
                             ),
                             touchCallback:
                                 (ScatterTouchResponse touchResponse) {
@@ -130,8 +125,14 @@ class _AsteroidGraphState extends State {
                                     if (selectedSpots
                                         .contains(lastPanStartOnIndex)) {
                                       selectedSpots.remove(lastPanStartOnIndex);
+                                      setState(() {
+                                        soyElPlanetaTal = false;
+                                      });
                                     } else {
                                       selectedSpots.add(lastPanStartOnIndex);
+                                      setState(() {
+                                        soyElPlanetaTal = true;
+                                      });
                                     }
                                   });
                                 }
@@ -153,6 +154,13 @@ class _AsteroidGraphState extends State {
               setState: setFetchedDate,
               currentDay: currentDay,
             ),
+            soyElPlanetaTal
+                ? Center(
+                    child: Text(
+                    'SOY EL PLANETA YTAL',
+                    style: TextStyle(color: Colors.red),
+                  ))
+                : SizedBox(),
           ],
         ),
       ),
