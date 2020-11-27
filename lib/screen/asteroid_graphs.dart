@@ -51,9 +51,12 @@ class _AsteroidGraphState extends State {
         .asMap()
         .map((index, e) => MapEntry(
             index,
-            ScatterSpot((index.toDouble() + 1), (1),
-                color: colorList[index],
-                radius: (e.asteroidSize.kmDiameter.maxDiameter))))
+            ScatterSpot(
+              (index.toDouble() + 1),
+              (1),
+              color: colorList[index],
+              radius: (e.asteroidSize.kmDiameter.maxDiameter),
+            )))
         .values
         .toList();
     readyToUseAsteroidList = loQueRetorna;

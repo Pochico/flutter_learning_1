@@ -24,28 +24,4 @@ class Calendar extends StatelessWidget {
           datePicker(context, setState, currentDay);
         });
   }
-
-  //  void setFetchedDate(String date) {
-  //   setState(() {
-  //     fetchedDate = date;
-  //   });
-  // }
 }
-
-// () => activateCalendar());
-
-// activateCalendar() {
-// showDatePicker(
-//         context: context,
-//         initialDate: DateTime.now(),
-//         firstDate: DateTime(2013),
-//         lastDate: DateTime.now())
-//     .then((date) {
-//   int anoActual = date.year;
-//   int mesActual = date.month;
-//   int diaActual = date.day;
-//   setState(() {
-//     fetchedDate = '$anoActual-$mesActual-$diaActual';
-//   });
-// });
-// }
