@@ -11,10 +11,12 @@ class RoverMarsDetail extends StatelessWidget {
       child: Container(
         child: Column(children: [
           SizedBox(height: 20),
-          Image(
-              image: NetworkImage(
-            roverItemDetailed.imgSrc,
-          )),
+          Hero(
+            tag: roverItemDetailed.imgSrc,
+            child: Image.network(
+              roverItemDetailed.imgSrc,
+            ),
+          ),
           SizedBox(height: 20),
           Text(
             roverItemDetailed.earthDate,
