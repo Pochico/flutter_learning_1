@@ -65,11 +65,14 @@ class _RoverMarsState extends State<RoverMars> {
                                       builder: (context) => RoverMarsDetail(
                                           roverItemDetailed:
                                               roverItems[index]))),
-                              child: Image.network(
-                                roverItems[index].imgSrc,
-                                width: double.infinity,
-                                height: double.infinity,
-                                fit: BoxFit.cover,
+                              child: Hero(
+                                tag: roverItems[index].imgSrc,
+                                child: Image.network(
+                                  roverItems[index].imgSrc,
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           );
