@@ -23,6 +23,7 @@ class _PicOfDayState extends State<PicOfDay> {
     setState(() {
       currentDayString = dateTimeToString(currentDay);
     });
+    print(currentDay);
   }
 
   @override

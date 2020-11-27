@@ -29,7 +29,6 @@ class _AsteroidsState extends State<Asteroids> {
             if (snapshot.hasData) {
               var asteroids = snapshot.data;
               var nearEarthObjects = asteroids.nearEarthObjects;
-              print(nearEarthObjects[1].asteroidSize.kmDiameter.maxDiameter);
               return ListView.builder(
                   padding: const EdgeInsets.all(8),
                   itemCount: snapshot.data.nearEarthObjects.length,

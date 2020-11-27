@@ -11,7 +11,7 @@ class AsteroidGraph extends StatefulWidget {
 }
 
 class _AsteroidGraphState extends State {
-  DateTime startDate = DateTime.now();
+  DateTime currentDay = DateTime.now();
   String fetchedStartDate;
   String fetchedEndDate;
 
@@ -20,172 +20,145 @@ class _AsteroidGraphState extends State {
   Color greyColor = Colors.grey;
 
   List<int> selectedSpots = [];
+  List<double> asteroidesEjeX = [2, 4, 6, 8, 2, 4, 6, 8];
+  List<double> asteroidesEjeY = [7, 7, 7, 7, 4, 4, 4, 4];
+
+  List<ScatterSpot> variableParaLaLista;
 
   int lastPanStartOnIndex = -1;
 
   @override
   void initState() {
     super.initState();
-    fetchedStartDate = dateTimeToString(startDate);
-    fetchedEndDate = dateTimeToString(addDay(startDate));
+    fetchedStartDate = dateTimeToString(currentDay);
+    fetchedEndDate = dateTimeToString(addDay(currentDay));
+    variableParaLaLista = listaAsteroides();
+  }
+
+  List<ScatterSpot> listaAsteroides() {
+    var loQueRetorna = asteroidesEjeX
+        .map(
+          (e) => ScatterSpot(
+            e, 7,
+            color: selectedSpots.contains(0) ? Colors.green : greyColor,
+            // radius: nearEarthObjects[e].asteroidSize.kmDiameter.maxDiameter
+          ),
+        )
+        .toList();
+    return loQueRetorna;
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: FutureBuilder<AsteroidsModel>(
-        future: fetchAsteroids(1, fetchedStartDate, fetchedEndDate),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            var asteroids = snapshot.data;
-            var nearEarthObjects = asteroids.nearEarthObjects;
-            print(nearEarthObjects[1].asteroidSize.kmDiameter.maxDiameter);
-            return Stack(children: [
-              AspectRatio(
-                aspectRatio: 1,
-                child: Card(
-                  color: const Color(0xff222222),
-                  child: ScatterChart(
-                    ScatterChartData(
-                      scatterSpots: [
-                        ScatterSpot(
-                          4,
-                          4,
-                          color: selectedSpots.contains(0)
-                              ? Colors.green
-                              : greyColor,
-                        ),
-                        ScatterSpot(
-                          2,
-                          5,
-                          color: selectedSpots.contains(1)
-                              ? Colors.yellow
-                              : greyColor,
-                          radius: nearEarthObjects[1]
-                                  .asteroidSize
-                                  .kmDiameter
-                                  .maxDiameter *
-                              2,
-                        ),
-                        ScatterSpot(
-                          4,
-                          5,
-                          color: selectedSpots.contains(2)
-                              ? Colors.purpleAccent
-                              : greyColor,
-                          radius: nearEarthObjects[2]
-                                  .asteroidSize
-                                  .kmDiameter
-                                  .maxDiameter *
-                              2,
-                        ),
-                        ScatterSpot(
-                          8,
-                          6,
-                          color: selectedSpots.contains(3)
-                              ? Colors.orange
-                              : greyColor,
-                          radius: 20,
-                        ),
-                        ScatterSpot(
-                          5,
-                          7,
-                          color: selectedSpots.contains(4)
-                              ? Colors.brown
-                              : greyColor,
-                          radius: 14,
-                        ),
-                        ScatterSpot(
-                          7,
-                          2,
-                          color: selectedSpots.contains(5)
-                              ? Colors.lightGreenAccent
-                              : greyColor,
-                          radius: 18,
-                        ),
-                        ScatterSpot(
-                          3,
-                          2,
-                          color: selectedSpots.contains(6)
-                              ? Colors.red
-                              : greyColor,
-                          radius: 36,
-                        ),
-                        ScatterSpot(
-                          2,
-                          8,
-                          color: selectedSpots.contains(7)
-                              ? Colors.tealAccent
-                              : greyColor,
-                          radius: 22,
-                        ),
-                      ],
-                      minX: 0,
-                      maxX: 10,
-                      minY: 0,
-                      maxY: 10,
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
-                      gridData: FlGridData(
-                        show: true,
-                        drawHorizontalLine: true,
-                        checkToShowHorizontalLine: (value) => true,
-                        getDrawingHorizontalLine: (value) =>
-                            FlLine(color: Colors.white.withOpacity(0.1)),
-                        drawVerticalLine: true,
-                        checkToShowVerticalLine: (value) => true,
-                        getDrawingVerticalLine: (value) =>
-                            FlLine(color: Colors.white.withOpacity(0.1)),
-                      ),
-                      titlesData: FlTitlesData(
-                        show: false,
-                      ),
-                      showingTooltipIndicators: selectedSpots,
-                      scatterTouchData: ScatterTouchData(
-                        enabled: true,
-                        handleBuiltInTouches: false,
-                        touchTooltipData: ScatterTouchTooltipData(
-                          tooltipBgColor: Colors.black,
-                        ),
-                        touchCallback: (ScatterTouchResponse touchResponse) {
-                          if (touchResponse.touchInput is FlPanStart) {
-                            lastPanStartOnIndex =
-                                touchResponse.touchedSpotIndex;
-                          } else if (touchResponse.touchInput is FlPanEnd) {
-                            final FlPanEnd flPanEnd = touchResponse.touchInput;
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(
+          children: [
+            FutureBuilder<AsteroidsModel>(
+              future: fetchAsteroids(1, fetchedStartDate, fetchedEndDate),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var asteroids = snapshot.data;
+                  var nearEarthObjects = asteroids.nearEarthObjects;
+                  print(
+                      nearEarthObjects[1].asteroidSize.kmDiameter.maxDiameter);
+                  return AspectRatio(
+                    aspectRatio: 1,
+                    child: Card(
+                      color: const Color(0xff222222),
+                      child: ScatterChart(
+                        ScatterChartData(
+                          scatterSpots: [
+                            ...variableParaLaLista,
+                            //    ScatterSpot(
+                            //   2,
+                            //   5,
+                            //   color: selectedSpots.contains(1)
+                            //       ? Colors.yellow
+                            //       : greyColor,
+                            //   radius: nearEarthObjects[1]
+                            //           .asteroidSize
+                            //           .kmDiameter
+                            //           .maxDiameter *
+                            //       2,
+                            // ),
+                          ],
+                          minX: 0,
+                          maxX: 10,
+                          minY: 0,
+                          maxY: 10,
+                          borderData: FlBorderData(
+                            show: false,
+                          ),
+                          gridData: FlGridData(
+                            show: true,
+                            drawHorizontalLine: true,
+                            checkToShowHorizontalLine: (value) => true,
+                            getDrawingHorizontalLine: (value) =>
+                                FlLine(color: Colors.white.withOpacity(0.05)),
+                            drawVerticalLine: true,
+                            checkToShowVerticalLine: (value) => true,
+                            getDrawingVerticalLine: (value) =>
+                                FlLine(color: Colors.white.withOpacity(0.05)),
+                          ),
+                          titlesData: FlTitlesData(
+                            show: false,
+                          ),
+                          showingTooltipIndicators: selectedSpots,
+                          scatterTouchData: ScatterTouchData(
+                            enabled: true,
+                            handleBuiltInTouches: false,
+                            touchTooltipData: ScatterTouchTooltipData(
+                              tooltipBgColor: Colors.black,
+                            ),
+                            touchCallback:
+                                (ScatterTouchResponse touchResponse) {
+                              if (touchResponse.touchInput is FlPanStart) {
+                                lastPanStartOnIndex =
+                                    touchResponse.touchedSpotIndex;
+                              } else if (touchResponse.touchInput is FlPanEnd) {
+                                final FlPanEnd flPanEnd =
+                                    touchResponse.touchInput;
 
-                            if (flPanEnd.velocity.pixelsPerSecond <=
-                                const Offset(4, 4)) {
-                              // Tap happened
-                              setState(() {
-                                if (selectedSpots
-                                    .contains(lastPanStartOnIndex)) {
-                                  selectedSpots.remove(lastPanStartOnIndex);
-                                } else {
-                                  selectedSpots.add(lastPanStartOnIndex);
+                                if (flPanEnd.velocity.pixelsPerSecond <=
+                                    const Offset(4, 4)) {
+                                  // Tap happened
+                                  setState(() {
+                                    if (selectedSpots
+                                        .contains(lastPanStartOnIndex)) {
+                                      selectedSpots.remove(lastPanStartOnIndex);
+                                    } else {
+                                      selectedSpots.add(lastPanStartOnIndex);
+                                    }
+                                  });
                                 }
-                              });
-                            }
-                          }
-                        },
+                              }
+                            },
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-            ]);
-          } else {
-            return Center(
-                child:
-                    Text('Failed to retrieve the data from the Asteroids API'));
-          }
-        },
+                  );
+                } else {
+                  return Center(
+                      child: Text(
+                          'Failed to retrieve the data from the Asteroids API'));
+                }
+              },
+            ),
+            Calendar(
+              setState: setFetchedDate,
+              currentDay: currentDay,
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  setStateCalendar() {
-    setState(() {});
+  void setFetchedDate(DateTime date) {
+    setState(() {
+      currentDay = date;
+    });
   }
 }
