@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:nasa_app/constant/colors.dart';
 import 'package:nasa_app/model/asteroids_model.dart';
 import 'package:nasa_app/repository/asteroids_repository.dart';
 import 'package:nasa_app/widget/calendar.dart';
@@ -20,10 +21,16 @@ class _AsteroidGraphState extends State {
   Color greyColor = Colors.grey;
 
   List<int> selectedSpots = [];
-  List<double> asteroidesEjeX = [2, 4, 6, 8, 2, 4, 6, 8];
-  List<double> asteroidesEjeY = [7, 7, 7, 7, 4, 4, 4, 4];
+  List<double> asteroidesEjeX = [0, 1, 2, 3];
+  // List<double> asteroidesEjeY = [7, 7, 7, 7, 4, 4, 4, 4];
+  List<Color> colorList = [
+    ASTEROID_COLOR_1,
+    ASTEROID_COLOR_2,
+    ASTEROID_COLOR_3,
+    ASTEROID_COLOR_4,
+  ];
 
-  List<ScatterSpot> variableParaLaLista;
+  List<ScatterSpot> readyToUseAsteroidList;
 
   int lastPanStartOnIndex = -1;
 
@@ -32,17 +39,14 @@ class _AsteroidGraphState extends State {
     super.initState();
     fetchedStartDate = dateTimeToString(currentDay);
     fetchedEndDate = dateTimeToString(addDay(currentDay));
-    variableParaLaLista = listaAsteroides();
+    readyToUseAsteroidList = asteroidList();
   }
 
-  List<ScatterSpot> listaAsteroides() {
+  List<ScatterSpot> asteroidList(List<NearEarthObjects> asteroids) {
     var loQueRetorna = asteroidesEjeX
         .map(
-          (e) => ScatterSpot(
-            e, 7,
-            color: selectedSpots.contains(0) ? Colors.green : greyColor,
-            // radius: nearEarthObjects[e].asteroidSize.kmDiameter.maxDiameter
-          ),
+          (e) => ScatterSpot((e + 1) * 2, (e + 1) * 2,
+              color: colorList[e.toInt()], radius: (e + 1) * 3),
         )
         .toList();
     return loQueRetorna;
@@ -60,8 +64,7 @@ class _AsteroidGraphState extends State {
                 if (snapshot.hasData) {
                   var asteroids = snapshot.data;
                   var nearEarthObjects = asteroids.nearEarthObjects;
-                  print(
-                      nearEarthObjects[1].asteroidSize.kmDiameter.maxDiameter);
+                  asteroidList(nearEarthObjects);
                   return AspectRatio(
                     aspectRatio: 1,
                     child: Card(
@@ -69,7 +72,7 @@ class _AsteroidGraphState extends State {
                       child: ScatterChart(
                         ScatterChartData(
                           scatterSpots: [
-                            ...variableParaLaLista,
+                            ...readyToUseAsteroidList,
                             //    ScatterSpot(
                             //   2,
                             //   5,
