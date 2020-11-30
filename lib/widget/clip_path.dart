@@ -48,3 +48,29 @@ class CustomClipRoverHeader extends CustomClipper<Path> {
     return true;
   }
 }
+
+class CustomClipAsteroidsGraph extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+
+    path.quadraticBezierTo(
+        20, size.height * .4, size.width / 2, size.height * .4);
+    path.lineTo(size.width * .9, size.height * .4);
+    path.quadraticBezierTo(
+        size.width * .9, size.height * .85, size.width, size.height);
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+
+  Paint paint = Paint()
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 10.0
+    ..color = Colors.black;
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return true;
+  }
+}
