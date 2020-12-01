@@ -20,25 +20,27 @@ class _AsteroidGraphState extends State {
   int touchedIndex;
   Color greyColor = Colors.grey;
   List<int> selectedSpots = [];
-  //List<double> asteroidesEjeX = [0, 1, 2, 3];
-  // List<double> asteroidesEjeY = [7, 7, 7, 7, 4, 4, 4, 4];
-  List<Color> colorList = [
+  final List<Color> colorList = [
     ASTEROID_COLOR_1,
     ASTEROID_COLOR_2,
     ASTEROID_COLOR_3,
     ASTEROID_COLOR_4,
-    ASTEROID_COLOR_2,
-    ASTEROID_COLOR_2,
-    ASTEROID_COLOR_2,
-    ASTEROID_COLOR_2,
-    ASTEROID_COLOR_2,
-    ASTEROID_COLOR_2,
+    ASTEROID_COLOR_5,
+    ASTEROID_COLOR_6,
+    ASTEROID_COLOR_7,
+    ASTEROID_COLOR_8,
+    ASTEROID_COLOR_9,
+    ASTEROID_COLOR_10,
   ];
 
   List<ScatterSpot> readyToUseAsteroidList;
   int lastPanStartOnIndex = -1;
 
-  bool soyElPlanetaTal = false;
+  bool touchedAsteroid = false;
+  List<NearEarthObjects> nearEarthObjectsVariable;
+  int usableTouchedSpotIndex;
+
+  List<int> asteroidsData = [];
 
   @override
   void initState() {
@@ -46,6 +48,8 @@ class _AsteroidGraphState extends State {
     fetchedStartDate = dateTimeToString(currentDay);
     fetchedEndDate = dateTimeToString(addDay(currentDay));
   }
+
+// TODO: Order the asteroids in the graphic in order to get 2 lines horizontally.
 
   void asteroidList(List<NearEarthObjects> asteroids) {
     var loQueRetorna = asteroids
@@ -93,8 +97,8 @@ class _AsteroidGraphState extends State {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     var asteroids = snapshot.data;
-                    var nearEarthObjects = asteroids.nearEarthObjects;
-                    asteroidList(nearEarthObjects);
+                    nearEarthObjectsVariable = asteroids.nearEarthObjects;
+                    asteroidList(nearEarthObjectsVariable);
                     return AspectRatio(
                       aspectRatio: 2.5,
                       child: Card(
@@ -130,13 +134,20 @@ class _AsteroidGraphState extends State {
                               enabled: true,
                               handleBuiltInTouches: false,
                               touchTooltipData: ScatterTouchTooltipData(
-                                tooltipBgColor: Colors.amber,
+                                tooltipBgColor: Colors.black45,
                               ),
                               touchCallback:
                                   (ScatterTouchResponse touchResponse) {
                                 if (touchResponse.touchInput is FlPanStart) {
-                                  lastPanStartOnIndex =
+                                  usableTouchedSpotIndex = lastPanStartOnIndex =
                                       touchResponse.touchedSpotIndex;
+                                  asteroidsData.contains(
+                                          touchResponse.touchedSpotIndex)
+                                      ? asteroidsData.remove(
+                                          touchResponse.touchedSpotIndex)
+                                      : asteroidsData
+                                          .add(touchResponse.touchedSpotIndex);
+                                  print(asteroidsData);
                                 } else if (touchResponse.touchInput
                                     is FlPanEnd) {
                                   final FlPanEnd flPanEnd =
@@ -150,13 +161,10 @@ class _AsteroidGraphState extends State {
                                           .contains(lastPanStartOnIndex)) {
                                         selectedSpots
                                             .remove(lastPanStartOnIndex);
-                                        setState(() {
-                                          soyElPlanetaTal = false;
-                                        });
                                       } else {
                                         selectedSpots.add(lastPanStartOnIndex);
                                         setState(() {
-                                          soyElPlanetaTal = true;
+                                          touchedAsteroid = true;
                                         });
                                       }
                                     });
@@ -186,12 +194,48 @@ class _AsteroidGraphState extends State {
                 ),
               ),
             ),
-            soyElPlanetaTal
-                ? Center(
-                    child: Text(
-                    'SOY EL PLANETA YTAL',
-                    style: TextStyle(color: Colors.red),
-                  ))
+            touchedAsteroid
+                ? Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 380,
+                      child: ListView.builder(
+                          itemCount: asteroidsData.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                                title: RichText(
+                              text: TextSpan(
+                                text: 'Asteroid Name: ',
+                                style: TextStyle(color: PRIMARY_COLOR),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: nearEarthObjectsVariable[
+                                              asteroidsData[index]]
+                                          .nameLimited,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              colorList[asteroidsData[index]])),
+                                  TextSpan(
+                                      text: '\nAsteroid Radius: ',
+                                      style: TextStyle(color: PRIMARY_COLOR)),
+                                  TextSpan(
+                                      text: nearEarthObjectsVariable[
+                                              asteroidsData[index]]
+                                          .asteroidSize
+                                          .kmDiameter
+                                          .maxDiameter
+                                          .toString(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              colorList[asteroidsData[index]]))
+                                ],
+                              ),
+                            ));
+                          }),
+                    ),
+                  )
                 : SizedBox(),
           ],
         ),

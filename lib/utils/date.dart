@@ -32,6 +32,9 @@ bool compareDate(DateTime currentDay) {
   return comparison;
 }
 
+// TODO: Create a way to avoid null date when cancelling date selection
+// TODO: Find out why the date doesn't send and refresh the fetch
+
 void datePicker(BuildContext context, Function setState, DateTime currentDay) {
   showDatePicker(
           context: context,
