@@ -83,12 +83,6 @@ class _PicOfDayState extends State<PicOfDay> {
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(height: 12),
-                      Icon(
-                        Icons.keyboard_arrow_down,
-                        color: Colors.white,
-                        size: 40,
-                      ),
                     ],
                   ),
                 ),
