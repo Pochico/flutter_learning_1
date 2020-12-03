@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nasa_app/constant/colors.dart';
 import 'package:nasa_app/repository/pic_of_day_repository.dart';
 import 'package:nasa_app/model/pic_of_day_model.dart';
 import 'package:nasa_app/widget/arrows_index.dart';
@@ -15,6 +16,7 @@ class _PicOfDayState extends State<PicOfDay> {
   bool isTodayDate = true;
   String currentDayString;
   DateTime currentDay = DateTime.now();
+  bool readingOpacity = false;
 
   @override
   void initState() {
@@ -39,6 +41,14 @@ class _PicOfDayState extends State<PicOfDay> {
                   image: NetworkImage(data.url),
                   fit: BoxFit.cover,
                 )),
+              ),
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: readingOpacity
+                        ? Colors.black.withOpacity(.7)
+                        : Colors.transparent),
               ),
               Align(
                 alignment: Alignment(0, 1),
@@ -84,6 +94,34 @@ class _PicOfDayState extends State<PicOfDay> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  print('Tapped');
+                  setState(() {
+                    readingOpacity = !readingOpacity;
+                  });
+                },
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 24),
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        color: PRIMARY_COLOR,
+                        borderRadius: BorderRadius.circular(100),
+                        border: Border.all(width: 2.0, color: Colors.white),
+                      ),
+                      child: Icon(
+                        Icons.panorama_fish_eye,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ),
