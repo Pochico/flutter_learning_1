@@ -55,7 +55,6 @@ class _AsteroidGraphState extends State {
   void asteroidList(List<NearEarthObjects> asteroids) {
     var loQueRetorna = asteroids
         .asMap()
-
         .map((index, e) => MapEntry(
             index,
             ScatterSpot(
@@ -64,7 +63,6 @@ class _AsteroidGraphState extends State {
               color: colorList[index],
               radius: (e.asteroidSize.kmDiameter.maxDiameter * 1.5),
             )))
-
         .values
         .toList();
     readyToUseAsteroidList = loQueRetorna;
@@ -135,7 +133,8 @@ class _AsteroidGraphState extends State {
                               ),
                               touchCallback:
                                   (ScatterTouchResponse touchResponse) {
-                                if (touchResponse.touchInput is FlPanStart) {
+                                if (touchResponse.touchInput is FlPanStart &&
+                                    touchResponse.touchedSpotIndex != -1) {
                                   usableTouchedSpotIndex = lastPanStartOnIndex =
                                       touchResponse.touchedSpotIndex;
                                   asteroidsData.contains(
