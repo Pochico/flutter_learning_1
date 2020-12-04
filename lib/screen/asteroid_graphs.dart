@@ -50,11 +50,12 @@ class _AsteroidGraphState extends State {
     fetchedEndDate = dateTimeToString(addDay(currentDay));
   }
 
-// TODO: Order the asteroids in the graphic in order to get 2 lines horizontally.
+// TODO: Put the asteroids in the graphic in order to get 2 lines horizontally.
 
   void asteroidList(List<NearEarthObjects> asteroids) {
     var loQueRetorna = asteroids
         .asMap()
+
         .map((index, e) => MapEntry(
             index,
             ScatterSpot(
@@ -63,6 +64,7 @@ class _AsteroidGraphState extends State {
               color: colorList[index],
               radius: (e.asteroidSize.kmDiameter.maxDiameter * 1.5),
             )))
+
         .values
         .toList();
     readyToUseAsteroidList = loQueRetorna;
@@ -83,7 +85,7 @@ class _AsteroidGraphState extends State {
                   color: PRIMARY_COLOR,
                 ),
                 child: Text(
-                  'Asteroids graphic: ' + fetchedStartDate,
+                  'Asteroids graphic: ' + dateTimeToString(currentDay),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -94,7 +96,8 @@ class _AsteroidGraphState extends State {
             Padding(
               padding: const EdgeInsets.only(top: 162),
               child: FutureBuilder<AsteroidsModel>(
-                future: fetchAsteroids(1, fetchedStartDate, fetchedEndDate),
+                future: fetchAsteroids(1, dateTimeToString(currentDay),
+                    dateTimeToString(addDay(currentDay))),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     var asteroids = snapshot.data;
