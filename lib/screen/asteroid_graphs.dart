@@ -72,36 +72,41 @@ class _AsteroidGraphState extends State {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Stack(
+        child: Column(
           children: [
             ClipPath(
               clipper: CustomClipAsteroidsGraph(),
               child: Container(
-                padding: EdgeInsets.only(left: 50, bottom: 100, top: 12),
+                padding: EdgeInsets.only(left: 50, bottom: 20, top: 12),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: PRIMARY_COLOR,
                 ),
-                child: Text(
-                  'Asteroids graphic: ' + dateTimeToString(currentDay),
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: SECONDARY_COLOR),
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: Text(
+                    'Asteroids graphic: ' + dateTimeToString(currentDay),
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: SECONDARY_COLOR),
+                  ),
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 162),
-              child: FutureBuilder<AsteroidsModel>(
-                future: fetchAsteroids(1, dateTimeToString(currentDay),
-                    dateTimeToString(addDay(currentDay))),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    var asteroids = snapshot.data;
-                    nearEarthObjectsVariable = asteroids.nearEarthObjects;
-                    asteroidList(nearEarthObjectsVariable);
-                    return AspectRatio(
+            SizedBox(height: 20),
+            FutureBuilder<AsteroidsModel>(
+              future: fetchAsteroids(1, dateTimeToString(currentDay),
+                  dateTimeToString(addDay(currentDay))),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var asteroids = snapshot.data;
+                  nearEarthObjectsVariable = asteroids.nearEarthObjects;
+                  asteroidList(nearEarthObjectsVariable);
+                  return Transform.scale(
+                    scale: 1.2,
+                    child: AspectRatio(
                       aspectRatio: 2.5,
                       child: Card(
                         color: PRIMARY_COLOR,
@@ -124,15 +129,16 @@ class _AsteroidGraphState extends State {
                             titlesData: FlTitlesData(
                               show: false,
                             ),
-                            showingTooltipIndicators: selectedSpots,
+                            // showingTooltipIndicators: selectedSpots,
                             scatterTouchData: ScatterTouchData(
                               enabled: false,
                               handleBuiltInTouches: false,
-                              touchTooltipData: ScatterTouchTooltipData(
-                                tooltipBgColor: Colors.black,
-                              ),
+                              // touchTooltipData: ScatterTouchTooltipData(
+                              //   tooltipBgColor: Colors.black,
+                              // ),
                               touchCallback:
                                   (ScatterTouchResponse touchResponse) {
+                                //Saca to esto a una funcion
                                 if (touchResponse.touchInput is FlPanStart &&
                                     touchResponse.touchedSpotIndex != -1) {
                                   usableTouchedSpotIndex = lastPanStartOnIndex =
@@ -170,66 +176,62 @@ class _AsteroidGraphState extends State {
                           ),
                         ),
                       ),
-                    );
-                  } else {
-                    return Center(
-                        child: Text(
-                            'Failed to retrieve the data from the Asteroids API'));
-                  }
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20, left: 16),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Calendar(
-                  setState: setFetchedDate,
-                  currentDay: currentDay,
-                ),
-              ),
-            ),
-            touchedAsteroid
-                ? Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      height: 380,
-                      child: ListView.builder(
-                          itemCount: asteroidsData.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                                title: RichText(
-                              text: TextSpan(
-                                text: 'Asteroid Name: ',
-                                style: TextStyle(color: PRIMARY_COLOR),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: nearEarthObjectsVariable[
-                                              asteroidsData[index]]
-                                          .nameLimited,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color:
-                                              colorList[asteroidsData[index]])),
-                                  TextSpan(
-                                      text: '\nAsteroid Radius: ',
-                                      style: TextStyle(color: PRIMARY_COLOR)),
-                                  TextSpan(
-                                      text: nearEarthObjectsVariable[
-                                              asteroidsData[index]]
-                                          .asteroidSize
-                                          .kmDiameter
-                                          .maxDiameter
-                                          .toString(),
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color:
-                                              colorList[asteroidsData[index]]))
-                                ],
-                              ),
-                            ));
-                          }),
                     ),
+                  );
+                } else {
+                  return Center(
+                      child: Text(
+                          'Failed to retrieve the data from the Asteroids API'));
+                }
+              },
+            ),
+
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 20, left: 16),
+            //   child: Align(
+            //     alignment: Alignment.topRight,
+            //     child: Calendar(
+            //       setState: setFetchedDate,
+            //       currentDay: currentDay,
+            //     ),
+            //   ),
+            // ),
+            touchedAsteroid
+                ? Expanded(
+                    child: ListView.builder(
+                        itemCount: asteroidsData.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                              title: RichText(
+                            text: TextSpan(
+                              text: 'Asteroid Name: ',
+                              style: TextStyle(color: PRIMARY_COLOR),
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: nearEarthObjectsVariable[
+                                            asteroidsData[index]]
+                                        .nameLimited,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color:
+                                            colorList[asteroidsData[index]])),
+                                TextSpan(
+                                    text: '\nAsteroid Radius: ',
+                                    style: TextStyle(color: PRIMARY_COLOR)),
+                                TextSpan(
+                                    text: nearEarthObjectsVariable[
+                                            asteroidsData[index]]
+                                        .asteroidSize
+                                        .kmDiameter
+                                        .maxDiameter
+                                        .toString(),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: colorList[asteroidsData[index]]))
+                              ],
+                            ),
+                          ));
+                        }),
                   )
                 : SizedBox(),
           ],
