@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:lottie/lottie.dart';
 import 'package:nasa_app/constant/colors.dart';
 import 'package:nasa_app/screen/asteroid_graphs.dart';
-import 'package:nasa_app/screen/asteroids.dart';
+import 'package:nasa_app/screen/solar_system.dart';
 import 'package:nasa_app/screen/rover_mars.dart';
 import 'package:nasa_app/widget/clip_path.dart';
 
@@ -50,8 +50,8 @@ class _MainMenuState extends State<MainMenu> {
             ])),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           // mainMenuNavigationButton('Foto del día', PicOfDay()),
+          mainMenuNavigationButton('Sistema Solar', SolarSystem()),
           mainMenuNavigationButton('Rover de Marte', RoverMars()),
-          mainMenuNavigationButton('Asteroides', Asteroids()),
           mainMenuNavigationButton('Gráficas de asteroides', AsteroidGraph()),
         ]),
       ),
