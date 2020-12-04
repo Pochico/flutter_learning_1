@@ -40,6 +40,7 @@ class _AsteroidGraphState extends State {
   List<NearEarthObjects> nearEarthObjectsVariable;
   int usableTouchedSpotIndex;
 
+  List<int> xAxisLocation = [0, 1, 2, 3, 4, 0, 1, 2, 3, 4];
   List<int> asteroidsData = [];
 
   @override
@@ -57,10 +58,10 @@ class _AsteroidGraphState extends State {
         .map((index, e) => MapEntry(
             index,
             ScatterSpot(
-              (index.toDouble() + 1),
-              (index > 4 ? 1 : 3),
+              (xAxisLocation[index].toDouble() + 1),
+              (index > 4 ? 2 : 5),
               color: colorList[index],
-              radius: (e.asteroidSize.kmDiameter.maxDiameter),
+              radius: (e.asteroidSize.kmDiameter.maxDiameter * 1.5),
             )))
         .values
         .toList();
@@ -111,30 +112,23 @@ class _AsteroidGraphState extends State {
                             minX: 0,
                             maxX: 6,
                             minY: 0,
-                            maxY: 5,
+                            maxY: 7,
                             borderData: FlBorderData(
                               show: false,
                             ),
                             gridData: FlGridData(
                               show: false,
                               drawHorizontalLine: false,
-                              checkToShowHorizontalLine: (value) => true,
-                              getDrawingHorizontalLine: (value) =>
-                                  FlLine(color: Colors.white.withOpacity(0.05)),
-                              drawVerticalLine: true,
-                              checkToShowVerticalLine: (value) => true,
-                              getDrawingVerticalLine: (value) =>
-                                  FlLine(color: Colors.white.withOpacity(0.05)),
                             ),
                             titlesData: FlTitlesData(
                               show: false,
                             ),
                             showingTooltipIndicators: selectedSpots,
                             scatterTouchData: ScatterTouchData(
-                              enabled: true,
+                              enabled: false,
                               handleBuiltInTouches: false,
                               touchTooltipData: ScatterTouchTooltipData(
-                                tooltipBgColor: Colors.black45,
+                                tooltipBgColor: Colors.black,
                               ),
                               touchCallback:
                                   (ScatterTouchResponse touchResponse) {
@@ -155,7 +149,6 @@ class _AsteroidGraphState extends State {
 
                                   if (flPanEnd.velocity.pixelsPerSecond <=
                                       const Offset(4, 4)) {
-                                    // Tap happened
                                     setState(() {
                                       if (selectedSpots
                                           .contains(lastPanStartOnIndex)) {
