@@ -54,11 +54,8 @@ class CustomClipAsteroidsGraph extends CustomClipper<Path> {
   Path getClip(Size size) {
     var path = Path();
 
-    path.quadraticBezierTo(
-        20, size.height * .4, size.width / 2, size.height * .4);
-    path.lineTo(size.width * .9, size.height * .4);
-    path.quadraticBezierTo(
-        size.width * .9, size.height * .85, size.width, size.height);
+    path.quadraticBezierTo(20, size.height, size.width / 2, size.height);
+    path.lineTo(size.width, size.height);
     path.lineTo(size.width, 0);
     path.close();
     return path;
