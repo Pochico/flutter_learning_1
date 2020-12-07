@@ -46,8 +46,6 @@ class _AsteroidGraphState extends State {
   @override
   void initState() {
     super.initState();
-    fetchedStartDate = dateTimeToString(currentDay);
-    fetchedEndDate = dateTimeToString(addDay(currentDay));
   }
 
 // TODO: Put the asteroids in the graphic in order to get 2 lines horizontally.
@@ -71,178 +69,167 @@ class _AsteroidGraphState extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blueAccent,
       body: SafeArea(
-        child: Column(
-          children: [
-            ClipPath(
-              clipper: CustomClipAsteroidsGraph(),
-              child: Container(
-                padding: EdgeInsets.only(left: 50, bottom: 20, top: 12),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: PRIMARY_COLOR,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 16),
-                  child: Text(
-                    'Asteroids graphic: ' + dateTimeToString(currentDay),
-                    textAlign: TextAlign.end,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: SECONDARY_COLOR),
+        child: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [PRIMARY_COLOR, PRIMARY_COLOR.withOpacity(.5)],
+                  stops: [.7, 1])),
+          child: Column(
+            children: [
+              ClipPath(
+                clipper: CustomClipAsteroidsGraph(),
+                child: Container(
+                  padding: EdgeInsets.only(left: 50, bottom: 20, top: 12),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: PRIMARY_COLOR,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: Text(
+                      'Asteroids graphic: ' + dateTimeToString(currentDay),
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: SECONDARY_COLOR),
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 20),
-            FutureBuilder<AsteroidsModel>(
-              future: fetchAsteroids(1, dateTimeToString(currentDay),
-                  dateTimeToString(addDay(currentDay))),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  var asteroids = snapshot.data;
-                  nearEarthObjectsVariable = asteroids.nearEarthObjects;
-                  asteroidList(nearEarthObjectsVariable);
-                  return Transform.scale(
-                    scale: 1.2,
-                    child: AspectRatio(
-                      aspectRatio: 2.5,
-                      child: Card(
-                        color: PRIMARY_COLOR,
-                        child: ScatterChart(
-                          ScatterChartData(
-                            scatterSpots: [
-                              ...readyToUseAsteroidList,
-                            ],
-                            minX: 0,
-                            maxX: 6,
-                            minY: 0,
-                            maxY: 7,
-                            borderData: FlBorderData(
-                              show: false,
-                            ),
-                            gridData: FlGridData(
-                              show: false,
-                              drawHorizontalLine: false,
-                            ),
-                            titlesData: FlTitlesData(
-                              show: false,
-                            ),
-                            // showingTooltipIndicators: selectedSpots,
-                            scatterTouchData: ScatterTouchData(
-                              enabled: false,
-                              handleBuiltInTouches: false,
-                              // touchTooltipData: ScatterTouchTooltipData(
-                              //   tooltipBgColor: Colors.black,
-                              // ),
-                              touchCallback:
-                                  (ScatterTouchResponse touchResponse) {
-                                //Saca to esto a una funcion
-                                if (touchResponse.touchInput is FlPanStart &&
-                                    touchResponse.touchedSpotIndex != -1) {
-                                  usableTouchedSpotIndex = lastPanStartOnIndex =
-                                      touchResponse.touchedSpotIndex;
-                                  asteroidsData.contains(
-                                          touchResponse.touchedSpotIndex)
-                                      ? asteroidsData.remove(
-                                          touchResponse.touchedSpotIndex)
-                                      : asteroidsData
-                                          .add(touchResponse.touchedSpotIndex);
-                                  print(asteroidsData);
-                                } else if (touchResponse.touchInput
-                                    is FlPanEnd) {
-                                  final FlPanEnd flPanEnd =
-                                      touchResponse.touchInput;
-
-                                  if (flPanEnd.velocity.pixelsPerSecond <=
-                                      const Offset(4, 4)) {
-                                    setState(() {
-                                      if (selectedSpots
-                                          .contains(lastPanStartOnIndex)) {
-                                        selectedSpots
-                                            .remove(lastPanStartOnIndex);
-                                      } else {
-                                        selectedSpots.add(lastPanStartOnIndex);
-                                        setState(() {
-                                          touchedAsteroid = true;
-                                        });
-                                      }
-                                    });
-                                  }
-                                }
-                              },
+              SizedBox(height: 20),
+              FutureBuilder<AsteroidsModel>(
+                future: fetchAsteroids(1, dateTimeToString(currentDay),
+                    dateTimeToString(addDay(currentDay))),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var asteroids = snapshot.data;
+                    nearEarthObjectsVariable = asteroids.nearEarthObjects;
+                    asteroidList(nearEarthObjectsVariable);
+                    return Transform.scale(
+                      scale: 1.2,
+                      child: AspectRatio(
+                        aspectRatio: 2.5,
+                        child: Card(
+                          color: PRIMARY_COLOR,
+                          child: ScatterChart(
+                            ScatterChartData(
+                              scatterSpots: [
+                                ...readyToUseAsteroidList,
+                              ],
+                              minX: 0,
+                              maxX: 6,
+                              minY: 0,
+                              maxY: 7,
+                              borderData: FlBorderData(
+                                show: false,
+                              ),
+                              gridData: FlGridData(
+                                show: false,
+                                drawHorizontalLine: false,
+                              ),
+                              titlesData: FlTitlesData(
+                                show: false,
+                              ),
+                              scatterTouchData: ScatterTouchData(
+                                enabled: false,
+                                handleBuiltInTouches: false,
+                                touchCallback:
+                                    (ScatterTouchResponse touchResponse) {
+                                  touchCall(touchResponse);
+                                },
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                } else {
-                  return Center(
-                      child: Text(
-                          'Failed to retrieve the data from the Asteroids API'));
-                }
-              },
-            ),
+                    );
+                  } else {
+                    return Center(
+                        child: Text(
+                            'Failed to retrieve the data from the Asteroids API'));
+                  }
+                },
+              ),
 
-            // Padding(
-            //   padding: const EdgeInsets.only(top: 20, left: 16),
-            //   child: Align(
-            //     alignment: Alignment.topRight,
-            //     child: Calendar(
-            //       setState: setFetchedDate,
-            //       currentDay: currentDay,
-            //     ),
-            //   ),
-            // ),
-            touchedAsteroid
-                ? Expanded(
-                    child: ListView.builder(
-                        itemCount: asteroidsData.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                              title: RichText(
-                            text: TextSpan(
-                              text: 'Asteroid Name: ',
-                              style: TextStyle(color: PRIMARY_COLOR),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 20, left: 16),
+              //   child: Align(
+              //     alignment: Alignment.topRight,
+              //     child: Calendar(
+              //       setState: setFetchedDate,
+              //       currentDay: currentDay,
+              //     ),
+              //   ),
+              // ),
+              touchedAsteroid
+                  ? Expanded(
+                      child: ListView.builder(
+                          itemCount: readyToUseAsteroidList.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                                title: RichText(
+                                    text: TextSpan(
+                              text: nearEarthObjectsVariable[index].nameLimited,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: colorList[index]),
                               children: <TextSpan>[
                                 TextSpan(
-                                    text: nearEarthObjectsVariable[
-                                            asteroidsData[index]]
-                                        .nameLimited,
+                                    text: '\n' +
+                                        nearEarthObjectsVariable[index]
+                                            .asteroidSize
+                                            .kmDiameter
+                                            .maxDiameter
+                                            .toString(),
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color:
-                                            colorList[asteroidsData[index]])),
-                                TextSpan(
-                                    text: '\nAsteroid Radius: ',
-                                    style: TextStyle(color: PRIMARY_COLOR)),
-                                TextSpan(
-                                    text: nearEarthObjectsVariable[
-                                            asteroidsData[index]]
-                                        .asteroidSize
-                                        .kmDiameter
-                                        .maxDiameter
-                                        .toString(),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: colorList[asteroidsData[index]]))
+                                        color: colorList[index]))
                               ],
-                            ),
-                          ));
-                        }),
-                  )
-                : SizedBox(),
-          ],
+                            )));
+                          }),
+                    )
+                  : SizedBox(),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  void setFetchedDate(DateTime date) {
-    setState(() {
-      currentDay = date;
-    });
+  // void setFetchedDate(DateTime date) {
+  //   setState(() {
+  //     currentDay = date;
+  //   });
+  // }
+
+  void touchCall(dynamic touchResponse) {
+    if (touchResponse.touchInput is FlPanStart &&
+        touchResponse.touchedSpotIndex != -1) {
+      usableTouchedSpotIndex =
+          lastPanStartOnIndex = touchResponse.touchedSpotIndex;
+      asteroidsData.contains(touchResponse.touchedSpotIndex)
+          ? asteroidsData.remove(touchResponse.touchedSpotIndex)
+          : asteroidsData.add(touchResponse.touchedSpotIndex);
+    } else if (touchResponse.touchInput is FlPanEnd) {
+      final FlPanEnd flPanEnd = touchResponse.touchInput;
+
+      if (flPanEnd.velocity.pixelsPerSecond <= const Offset(4, 4)) {
+        setState(() {
+          if (selectedSpots.contains(lastPanStartOnIndex)) {
+            selectedSpots.remove(lastPanStartOnIndex);
+          } else {
+            selectedSpots.add(lastPanStartOnIndex);
+            setState(() {
+              touchedAsteroid = true;
+            });
+          }
+        });
+      }
+    }
   }
 }
