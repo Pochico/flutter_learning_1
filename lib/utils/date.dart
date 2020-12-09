@@ -32,8 +32,6 @@ bool compareDate(DateTime currentDay) {
   return comparison;
 }
 
-// TODO: Find out why the date doesn't send and refresh the fetch
-
 void datePicker(BuildContext context, Function setState, DateTime currentDay) {
   showDatePicker(
           context: context,

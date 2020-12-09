@@ -49,7 +49,6 @@ class _MainMenuState extends State<MainMenu> {
               Color.fromRGBO(164, 80, 0, .9),
             ])),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          // mainMenuNavigationButton('Foto del día', PicOfDay()),
           mainMenuNavigationButton('Sistema Solar', SolarSystem()),
           mainMenuNavigationButton('Rover de Marte', RoverMars()),
           mainMenuNavigationButton('Gráficas de asteroides', AsteroidGraph()),

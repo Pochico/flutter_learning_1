@@ -29,8 +29,8 @@ class _SolarSystemState extends State<SolarSystem> {
               print('snapshot bad');
               print(snapshot);
               return Center(
-                  child: Text(
-                      'Failed to retrieve the data from the Solar System API'));
+                child: CircularProgressIndicator(),
+              );
             }
           },
         ),

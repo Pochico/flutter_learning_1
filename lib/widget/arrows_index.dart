@@ -11,12 +11,6 @@ class ArrowsIndex extends StatelessWidget {
       child: Container(
         height: 40,
         width: 40,
-        // decoration: BoxDecoration(
-        //     borderRadius: BorderRadius.circular(50),
-        //     border: Border.all(
-        //       color: Colors.white,
-        //       width: 2,
-        //     )),
         child: Icon(
           isPreviousArrow
               ? Icons.keyboard_arrow_left
