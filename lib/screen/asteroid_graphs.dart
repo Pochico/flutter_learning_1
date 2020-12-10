@@ -202,13 +202,69 @@ class _AsteroidGraphState extends State {
         builder: (context) {
           return Dialog(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(nearEarthObjectsVariable[index].nameLimited),
-                Text(nearEarthObjectsVariable[index]
-                    .asteroidSize
-                    .kmDiameter
-                    .maxDiameter
-                    .toString()),
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12))),
+                  child: Image.asset(
+                    'assets/images/asteroid_2.jpg',
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  'Name: ' + nearEarthObjectsVariable[index].nameLimited,
+                  style:
+                      TextStyle(fontSize: FONT_SIZE, fontWeight: FONT_WEIGHT),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  'ID: ' + nearEarthObjectsVariable[index].id,
+                  style:
+                      TextStyle(fontSize: FONT_SIZE, fontWeight: FONT_WEIGHT),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  'Diameter: ' +
+                      nearEarthObjectsVariable[index]
+                          .asteroidSize
+                          .kmDiameter
+                          .maxDiameter
+                          .toStringAsFixed(2) +
+                      'km',
+                  style:
+                      TextStyle(fontSize: FONT_SIZE, fontWeight: FONT_WEIGHT),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  nearEarthObjectsVariable[index].hazard
+                      ? 'Is potentially hazardous'
+                      : 'Isn\'t hazardous',
+                  style:
+                      TextStyle(fontSize: FONT_SIZE, fontWeight: FONT_WEIGHT),
+                ),
+                // Expanded(
+                //   child: ListView.builder(
+                //     itemCount: 5,
+                //     itemBuilder: (context, indice) {
+                //       ListTile(
+                //         title: Text(nearEarthObjectsVariable[index]
+                //             .closeApproach
+                //             .toString()),
+                //       );
+                //     },
+                //   ),
+                // )
               ],
             ),
           );
