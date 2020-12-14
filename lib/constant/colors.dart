@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // Colores APP
 const PRIMARY_COLOR = Color(0xFF17161b);
-const PRIMARY_COLOR_SHADE = Color(0xFF17161b);
+const PRIMARY_COLOR_SHADE = Color(0xFF242C2F);
 const SECONDARY_COLOR = Color(0xFFf2c902);
 
 // Colores gráfica Asteroides

@@ -102,7 +102,7 @@ class _AsteroidGraphState extends State {
                     asteroidList(nearEarthObjectsVariable);
                     print(nearEarthObjectsVariable[2].nameLimited);
                     return Container(
-                      height: 650,
+                      height: 600,
                       child: Column(children: [
                         Transform.scale(
                           scale: 1.2,
@@ -157,6 +157,11 @@ class _AsteroidGraphState extends State {
                                         colorList: colorList));
                               }),
                         ),
+                        Icon(
+                          Icons.keyboard_arrow_down,
+                          color: Colors.white,
+                          size: 24,
+                        )
                       ]),
                     );
                   } else {
@@ -180,7 +185,6 @@ class _AsteroidGraphState extends State {
           lastPanStartOnIndex = touchResponse.touchedSpotIndex;
     } else if (touchResponse.touchInput is FlPanEnd) {
       final FlPanEnd flPanEnd = touchResponse.touchInput;
-
       if (flPanEnd.velocity.pixelsPerSecond <= const Offset(4, 4)) {
         setState(() {
           if (selectedSpots.contains(lastPanStartOnIndex)) {
@@ -202,19 +206,12 @@ class _AsteroidGraphState extends State {
         builder: (context) {
           return Dialog(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(12),
-                          topRight: Radius.circular(12))),
-                  child: Image.asset(
-                    'assets/images/asteroid_2.jpg',
-                  ),
+                Image.asset(
+                  'assets/images/asteroid_2.jpg',
                 ),
                 SizedBox(
-                  height: 12,
+                  height: 24,
                 ),
                 Text(
                   'Name: ' + nearEarthObjectsVariable[index].nameLimited,
