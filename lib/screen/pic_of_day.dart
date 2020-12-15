@@ -16,7 +16,7 @@ class _PicOfDayState extends State<PicOfDay> {
   bool isTodayDate = true;
   String currentDayString;
   DateTime currentDay = DateTime.now();
-  bool readingOpacity = false;
+  double _readingOpacity = 0;
 
   @override
   void initState() {
@@ -42,13 +42,15 @@ class _PicOfDayState extends State<PicOfDay> {
                   fit: BoxFit.cover,
                 )),
               ),
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: readingOpacity
-                        ? Colors.black.withOpacity(.7)
-                        : Colors.transparent),
+              AnimatedOpacity(
+                duration: const Duration(milliseconds: 300),
+                opacity: _readingOpacity,
+                child: Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(_readingOpacity)),
+                ),
               ),
               Align(
                 alignment: Alignment(0, 1),
@@ -99,10 +101,14 @@ class _PicOfDayState extends State<PicOfDay> {
               ),
               GestureDetector(
                 onTap: () {
-                  print('Tapped');
-                  setState(() {
-                    readingOpacity = !readingOpacity;
-                  });
+                  print(_readingOpacity);
+                  _readingOpacity > 0
+                      ? setState(() {
+                          _readingOpacity = 0;
+                        })
+                      : setState(() {
+                          _readingOpacity = .8;
+                        });
                 },
                 child: Align(
                   alignment: Alignment.bottomRight,

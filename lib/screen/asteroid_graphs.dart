@@ -102,7 +102,7 @@ class _AsteroidGraphState extends State {
                     asteroidList(nearEarthObjectsVariable);
                     print(nearEarthObjectsVariable[2].nameLimited);
                     return Container(
-                      height: 650,
+                      height: 600,
                       child: Column(children: [
                         Transform.scale(
                           scale: 1.2,
@@ -157,6 +157,11 @@ class _AsteroidGraphState extends State {
                                         colorList: colorList));
                               }),
                         ),
+                        Icon(
+                          Icons.keyboard_arrow_down,
+                          color: Colors.white,
+                          size: 24,
+                        )
                       ]),
                     );
                   } else {
@@ -180,7 +185,6 @@ class _AsteroidGraphState extends State {
           lastPanStartOnIndex = touchResponse.touchedSpotIndex;
     } else if (touchResponse.touchInput is FlPanEnd) {
       final FlPanEnd flPanEnd = touchResponse.touchInput;
-
       if (flPanEnd.velocity.pixelsPerSecond <= const Offset(4, 4)) {
         setState(() {
           if (selectedSpots.contains(lastPanStartOnIndex)) {
@@ -203,12 +207,61 @@ class _AsteroidGraphState extends State {
           return Dialog(
             child: Column(
               children: [
-                Text(nearEarthObjectsVariable[index].nameLimited),
-                Text(nearEarthObjectsVariable[index]
-                    .asteroidSize
-                    .kmDiameter
-                    .maxDiameter
-                    .toString()),
+                Image.asset(
+                  'assets/images/asteroid_2.jpg',
+                ),
+                SizedBox(
+                  height: 24,
+                ),
+                Text(
+                  'Name: ' + nearEarthObjectsVariable[index].nameLimited,
+                  style:
+                      TextStyle(fontSize: FONT_SIZE, fontWeight: FONT_WEIGHT),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  'ID: ' + nearEarthObjectsVariable[index].id,
+                  style:
+                      TextStyle(fontSize: FONT_SIZE, fontWeight: FONT_WEIGHT),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  'Diameter: ' +
+                      nearEarthObjectsVariable[index]
+                          .asteroidSize
+                          .kmDiameter
+                          .maxDiameter
+                          .toStringAsFixed(2) +
+                      'km',
+                  style:
+                      TextStyle(fontSize: FONT_SIZE, fontWeight: FONT_WEIGHT),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  nearEarthObjectsVariable[index].hazard
+                      ? 'Is potentially hazardous'
+                      : 'Isn\'t hazardous',
+                  style:
+                      TextStyle(fontSize: FONT_SIZE, fontWeight: FONT_WEIGHT),
+                ),
+                // Expanded(
+                //   child: ListView.builder(
+                //     itemCount: 5,
+                //     itemBuilder: (context, indice) {
+                //       ListTile(
+                //         title: Text(nearEarthObjectsVariable[index]
+                //             .closeApproach
+                //             .toString()),
+                //       );
+                //     },
+                //   ),
+                // )
               ],
             ),
           );

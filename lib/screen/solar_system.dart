@@ -23,8 +23,48 @@ class _SolarSystemState extends State<SolarSystem> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               print('snapshot good');
-              print(snapshot);
-              return Container(height: 20, width: 20, color: PRIMARY_COLOR);
+              List<PlanetModel> solarSystem = snapshot.data.solarSystem;
+              return Container(
+                height: double.infinity,
+                width: double.infinity,
+                color: PRIMARY_COLOR,
+                child: ListView.builder(
+                    itemCount: snapshot.data.solarSystem.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: PRIMARY_COLOR_SHADE,
+                                borderRadius: BorderRadius.circular(6)),
+                            child: Column(
+                              children: [
+                                Text(
+                                  solarSystem[index].name,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      height: 2),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(4),
+                                      color: PRIMARY_COLOR,
+                                    ),
+                                    child: Text(
+                                      solarSystem[index].id.toString(),
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )),
+                      );
+                    }),
+              );
             } else {
               print('snapshot bad');
               print(snapshot);
