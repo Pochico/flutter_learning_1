@@ -9,6 +9,8 @@ class SolarSystem extends StatefulWidget {
 }
 
 class _SolarSystemState extends State<SolarSystem> {
+  List<String> planetElements;
+
   @override
   void initState() {
     super.initState();
@@ -23,6 +25,7 @@ class _SolarSystemState extends State<SolarSystem> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               print('snapshot good');
+              print(snapshot.data.solarSystem[0]);
               List<PlanetModel> solarSystem = snapshot.data.solarSystem;
               return Container(
                 height: double.infinity,
@@ -33,35 +36,111 @@ class _SolarSystemState extends State<SolarSystem> {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8),
-                        child: Container(
-                            decoration: BoxDecoration(
-                                color: PRIMARY_COLOR_SHADE,
-                                borderRadius: BorderRadius.circular(6)),
-                            child: Column(
-                              children: [
-                                Text(
-                                  solarSystem[index].name,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      height: 2),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(4),
-                                      color: PRIMARY_COLOR,
-                                    ),
-                                    child: Text(
-                                      solarSystem[index].id.toString(),
-                                      style: TextStyle(color: Colors.white),
+                        child: Stack(children: [
+                          Container(
+                              decoration: BoxDecoration(
+                                  color: PRIMARY_COLOR_SHADE,
+                                  borderRadius: BorderRadius.circular(6)),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Text(
+                                    solarSystem[index].name,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        height: 2),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(4),
+                                        color: PRIMARY_COLOR,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Diameter: ' +
+                                                  solarSystem[index]
+                                                      .diameter
+                                                      .toString() +
+                                                  ' Km',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  height: 1.6),
+                                            ),
+                                            Text(
+                                              'Density: ' +
+                                                  solarSystem[index]
+                                                      .density
+                                                      .toString() +
+                                                  ' g/cm³',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                            Text(
+                                              'Mass: ' +
+                                                  solarSystem[index].mass +
+                                                  ' MØ',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  height: 1.6),
+                                            ),
+                                            Text(
+                                              'Gravity: ' +
+                                                  solarSystem[index].gravity +
+                                                  ' N/km',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  height: 1.6),
+                                            ),
+                                            Text(
+                                              'Length of Day: ' +
+                                                  solarSystem[index].dayLength +
+                                                  ' Hours',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  height: 1.6),
+                                            ),
+                                            Text(
+                                              'Distance from the Sun: ' +
+                                                  solarSystem[index]
+                                                      .sunDistance +
+                                                  ' Km',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  height: 1.6),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                )
-                              ],
-                            )),
+                                  GestureDetector(
+                                    onTap: () => {
+                                      print(solarSystem[index].name +
+                                          ' was tapped')
+                                    },
+                                    child: Icon(
+                                      Icons.keyboard_arrow_down,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                ],
+                              )),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Image.asset('planet_' +
+                                solarSystem[index].toString() +
+                                '.png'),
+                          )
+                        ]),
                       );
                     }),
               );
