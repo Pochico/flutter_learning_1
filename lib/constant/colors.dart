@@ -20,3 +20,6 @@ const ASTEROID_COLOR_10 = Color(0xFFbd443b);
 // Estilos dialog asteroides
 const FONT_SIZE = 16.0;
 const FONT_WEIGHT = FontWeight.bold;
+
+//TODO poner botón settings en home
+//TODO Hacer Tema. Usa SharedPreferences. https://pub.dev/packages/shared_preferences
