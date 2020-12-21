@@ -14,9 +14,7 @@ class AsteroidGraph extends StatefulWidget {
 }
 
 class _AsteroidGraphState extends State {
-  DateTime currentDay = DateTime.now();
-  String fetchedStartDate;
-  String fetchedEndDate;
+  int pageNumber = 1;
 
   int touchedIndex;
   Color greyColor = Colors.grey;
@@ -93,8 +91,7 @@ class _AsteroidGraphState extends State {
               SizedBox(height: 20),
               // TODO Arreglar column con expanded
               FutureBuilder<AsteroidsModel>(
-                future: fetchAsteroids(1, dateTimeToString(currentDay),
-                    dateTimeToString(addDay(currentDay))),
+                future: fetchAsteroids(pageNumber),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     var asteroids = snapshot.data;
@@ -157,10 +154,13 @@ class _AsteroidGraphState extends State {
                                         colorList: colorList));
                               }),
                         ),
-                        Icon(
-                          Icons.keyboard_arrow_down,
-                          color: Colors.white,
-                          size: 24,
+                        GestureDetector(
+                          onTap: () => {
+                            setState(() {
+                              pageNumber = pageNumber + 1;
+                            })
+                          },
+                          child: Icon(Icons.keyboard_arrow_right),
                         )
                       ]),
                     );
@@ -205,64 +205,72 @@ class _AsteroidGraphState extends State {
         context: context,
         builder: (context) {
           return Dialog(
-            child: Column(
-              children: [
-                Image.asset(
-                  'assets/images/asteroid_2.jpg',
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular((10))),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Container(
+                height: 500,
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'assets/images/asteroid_2.jpg',
+                    ),
+                    SizedBox(
+                      height: 24,
+                    ),
+                    Text(
+                      'Name: ' + nearEarthObjectsVariable[index].nameLimited,
+                      style: TextStyle(
+                          fontSize: FONT_SIZE, fontWeight: FONT_WEIGHT),
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      'ID: ' + nearEarthObjectsVariable[index].id,
+                      style: TextStyle(
+                          fontSize: FONT_SIZE, fontWeight: FONT_WEIGHT),
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      'Diameter: ' +
+                          nearEarthObjectsVariable[index]
+                              .asteroidSize
+                              .kmDiameter
+                              .maxDiameter
+                              .toStringAsFixed(2) +
+                          'km',
+                      style: TextStyle(
+                          fontSize: FONT_SIZE, fontWeight: FONT_WEIGHT),
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      nearEarthObjectsVariable[index].hazard
+                          ? 'Is potentially hazardous'
+                          : 'Isn\'t hazardous',
+                      style: TextStyle(
+                          fontSize: FONT_SIZE, fontWeight: FONT_WEIGHT),
+                    ),
+                    // Expanded(
+                    //   child: ListView.builder(
+                    //     itemCount: 5,
+                    //     itemBuilder: (context, indice) {
+                    //       ListTile(
+                    //         title: Text(nearEarthObjectsVariable[index]
+                    //             .closeApproach
+                    //             .toString()),
+                    //       );
+                    //     },
+                    //   ),
+                    // )
+                  ],
                 ),
-                SizedBox(
-                  height: 24,
-                ),
-                Text(
-                  'Name: ' + nearEarthObjectsVariable[index].nameLimited,
-                  style:
-                      TextStyle(fontSize: FONT_SIZE, fontWeight: FONT_WEIGHT),
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-                Text(
-                  'ID: ' + nearEarthObjectsVariable[index].id,
-                  style:
-                      TextStyle(fontSize: FONT_SIZE, fontWeight: FONT_WEIGHT),
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-                Text(
-                  'Diameter: ' +
-                      nearEarthObjectsVariable[index]
-                          .asteroidSize
-                          .kmDiameter
-                          .maxDiameter
-                          .toStringAsFixed(2) +
-                      'km',
-                  style:
-                      TextStyle(fontSize: FONT_SIZE, fontWeight: FONT_WEIGHT),
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-                Text(
-                  nearEarthObjectsVariable[index].hazard
-                      ? 'Is potentially hazardous'
-                      : 'Isn\'t hazardous',
-                  style:
-                      TextStyle(fontSize: FONT_SIZE, fontWeight: FONT_WEIGHT),
-                ),
-                // Expanded(
-                //   child: ListView.builder(
-                //     itemCount: 5,
-                //     itemBuilder: (context, indice) {
-                //       ListTile(
-                //         title: Text(nearEarthObjectsVariable[index]
-                //             .closeApproach
-                //             .toString()),
-                //       );
-                //     },
-                //   ),
-                // )
-              ],
+              ),
             ),
           );
         });

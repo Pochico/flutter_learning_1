@@ -37,109 +37,116 @@ class _SolarSystemState extends State<SolarSystem> {
                       return Padding(
                         padding: const EdgeInsets.all(8),
                         child: Stack(children: [
-                          Container(
-                              decoration: BoxDecoration(
-                                  color: PRIMARY_COLOR_SHADE,
-                                  borderRadius: BorderRadius.circular(6)),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Text(
-                                    solarSystem[index].name,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        height: 2),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(6),
+                            child: Container(
+                                height: 220,
+                                color: PRIMARY_COLOR_SHADE,
+                                child: Stack(children: [
+                                  Transform.translate(
+                                    offset: const Offset(220, -30),
+                                    child: Image.asset(
+                                        'assets/images/planet_1.png'),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(4),
-                                        color: PRIMARY_COLOR,
+                                  Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Text(
+                                        solarSystem[index].name,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                            height: 2),
                                       ),
-                                      child: Padding(
+                                      Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Diameter: ' +
-                                                  solarSystem[index]
-                                                      .diameter
-                                                      .toString() +
-                                                  ' Km',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  height: 1.6),
+                                        child: Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(4),
+                                            color: PRIMARY_COLOR,
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Diameter: ' +
+                                                      solarSystem[index]
+                                                          .diameter
+                                                          .toString() +
+                                                      ' Km',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      height: 1.6),
+                                                ),
+                                                Text(
+                                                  'Density: ' +
+                                                      solarSystem[index]
+                                                          .density
+                                                          .toString() +
+                                                      ' g/cm³',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      height: 1.6),
+                                                ),
+                                                Text(
+                                                  'Mass: ' +
+                                                      solarSystem[index].mass +
+                                                      ' MØ',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      height: 1.6),
+                                                ),
+                                                Text(
+                                                  'Gravity: ' +
+                                                      solarSystem[index]
+                                                          .gravity +
+                                                      ' N/km',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      height: 1.6),
+                                                ),
+                                                Text(
+                                                  'Length of Day: ' +
+                                                      solarSystem[index]
+                                                          .dayLength +
+                                                      ' Hours',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      height: 1.6),
+                                                ),
+                                                Text(
+                                                  'Distance from the Sun: ' +
+                                                      solarSystem[index]
+                                                          .sunDistance +
+                                                      ' Km',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      height: 1.6),
+                                                ),
+                                              ],
                                             ),
-                                            Text(
-                                              'Density: ' +
-                                                  solarSystem[index]
-                                                      .density
-                                                      .toString() +
-                                                  ' g/cm³',
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                            Text(
-                                              'Mass: ' +
-                                                  solarSystem[index].mass +
-                                                  ' MØ',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  height: 1.6),
-                                            ),
-                                            Text(
-                                              'Gravity: ' +
-                                                  solarSystem[index].gravity +
-                                                  ' N/km',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  height: 1.6),
-                                            ),
-                                            Text(
-                                              'Length of Day: ' +
-                                                  solarSystem[index].dayLength +
-                                                  ' Hours',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  height: 1.6),
-                                            ),
-                                            Text(
-                                              'Distance from the Sun: ' +
-                                                  solarSystem[index]
-                                                      .sunDistance +
-                                                  ' Km',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  height: 1.6),
-                                            ),
-                                          ],
+                                          ),
                                         ),
                                       ),
-                                    ),
+                                      // GestureDetector(
+                                      //   onTap: () => {
+                                      //     print(solarSystem[index].name +
+                                      //         ' was tapped')
+                                      //   },
+                                      //   child: Icon(
+                                      //     Icons.keyboard_arrow_down,
+                                      //     color: Colors.white,
+                                      //   ),
+                                      // )
+                                    ],
                                   ),
-                                  GestureDetector(
-                                    onTap: () => {
-                                      print(solarSystem[index].name +
-                                          ' was tapped')
-                                    },
-                                    child: Icon(
-                                      Icons.keyboard_arrow_down,
-                                      color: Colors.white,
-                                    ),
-                                  )
-                                ],
-                              )),
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: Image.asset('planet_' +
-                                solarSystem[index].toString() +
-                                '.png'),
-                          )
+                                ])),
+                          ),
                         ]),
                       );
                     }),
