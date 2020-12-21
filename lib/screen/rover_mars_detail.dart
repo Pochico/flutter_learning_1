@@ -9,8 +9,7 @@ class RoverMarsDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        child: Column(children: [
-          SizedBox(height: 20),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Hero(
             tag: roverItemDetailed.imgSrc,
             child: Image.network(

@@ -23,30 +23,35 @@ class AsteroidListTile extends StatelessWidget {
         children: <TextSpan>[
           TextSpan(
               text: '\n' +
-                  nearEarthObjectsVariable[neovIndex]
-                      .asteroidSize
-                      .kmDiameter
-                      .maxDiameter
-                      .toString() +
-                  ' Km',
+                  (nearEarthObjectsVariable[neovIndex]
+                              .asteroidSize
+                              .kmDiameter
+                              .maxDiameter *
+                          100)
+                      .toStringAsFixed(3) +
+                  ' m',
               style: TextStyle(
                   fontWeight: FontWeight.bold, color: colorList[neovIndex]))
         ],
       )),
       trailing: Container(
-        height: nearEarthObjectsVariable[neovIndex]
-                .asteroidSize
-                .kmDiameter
-                .maxDiameter *
-            3,
-        width: nearEarthObjectsVariable[neovIndex]
-                .asteroidSize
-                .kmDiameter
-                .maxDiameter *
-            3,
-        decoration: BoxDecoration(
-            color: colorList[neovIndex],
-            borderRadius: BorderRadius.circular(20)),
+        width: 30,
+        alignment: Alignment.center,
+        child: Container(
+          height: nearEarthObjectsVariable[neovIndex]
+                  .asteroidSize
+                  .kmDiameter
+                  .maxDiameter *
+              3,
+          width: nearEarthObjectsVariable[neovIndex]
+                  .asteroidSize
+                  .kmDiameter
+                  .maxDiameter *
+              3,
+          decoration: BoxDecoration(
+              color: colorList[neovIndex],
+              borderRadius: BorderRadius.circular(20)),
+        ),
       ),
     );
   }

@@ -12,11 +12,13 @@ class PicOfDay extends StatefulWidget {
   _PicOfDayState createState() => _PicOfDayState();
 }
 
+//TODO Precargar primera imagen del día (poner home y picOfDay en stack y pasar de una a otra con un AnimatedOpacity)
+//TODO Caché. Consiste en guardar en un estado un array con los datos de cada día, al ir hacia atrás hace el fetch pero al voler hacia alante primero comprueba si hay datos de ese día guardados y los coge, sino hace el fetch
 class _PicOfDayState extends State<PicOfDay> {
   bool isTodayDate = true;
   String currentDayString;
   DateTime currentDay = DateTime.now();
-  double _readingOpacity = 0;
+  bool _readingOpacity = false;
 
   @override
   void initState() {
@@ -35,22 +37,22 @@ class _PicOfDayState extends State<PicOfDay> {
           final data = snapshot.data;
           if (snapshot.hasData) {
             return Stack(children: [
-              Container(
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                  image: NetworkImage(data.url),
-                  fit: BoxFit.cover,
-                )),
-              ),
+              data.url.contains('apod.nasa')
+                  ? Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                        image: NetworkImage(data.url),
+                        fit: BoxFit.cover,
+                      )),
+                    )
+                  : Text(data.url), //TODO Video de youtube
               AnimatedOpacity(
                 duration: const Duration(milliseconds: 300),
-                opacity: _readingOpacity,
+                opacity: _readingOpacity ? 0.8 : 0,
                 child: Container(
-                  height: double.infinity,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(_readingOpacity)),
-                ),
+                    height: double.infinity,
+                    width: double.infinity,
+                    color: Colors.black.withOpacity(0.8)),
               ),
               Align(
                 alignment: Alignment(0, 1),
@@ -101,14 +103,9 @@ class _PicOfDayState extends State<PicOfDay> {
               ),
               GestureDetector(
                 onTap: () {
-                  print(_readingOpacity);
-                  _readingOpacity > 0
-                      ? setState(() {
-                          _readingOpacity = 0;
-                        })
-                      : setState(() {
-                          _readingOpacity = .8;
-                        });
+                  setState(() {
+                    _readingOpacity = !_readingOpacity;
+                  });
                 },
                 child: Align(
                   alignment: Alignment.bottomRight,
