@@ -21,5 +21,7 @@ const ASTEROID_COLOR_10 = Color(0xFFbd443b);
 const FONT_SIZE = 16.0;
 const FONT_WEIGHT = FontWeight.bold;
 
-//TODO poner botón settings en home
-//TODO Hacer Tema. Usa SharedPreferences. https://pub.dev/packages/shared_preferences
+//TODO poner botón settings en home (si tiene animación mejor, tienes un ejemplo de animación en main_menu. Pon algo sutil. Los colores se pueden modificar en la propia pagina, sino ya te enseñaré con código  https://lottiefiles.com/search?q=settings&category=animations&animations-page=3 )
+//TODO hacer pantalla setings
+
+//TODO Hacer Tema Colores. Usa SharedPreferences. https://pub.dev/packages/shared_preferences
