@@ -68,111 +68,149 @@ class _AsteroidGraphState extends State {
     return Scaffold(
       backgroundColor: Colors.blueAccent,
       body: SafeArea(
-        child: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [PRIMARY_COLOR, PRIMARY_COLOR.withOpacity(.5)],
-                  stops: [.7, 1])),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 24),
-                child: Text(
-                  'Asteroids graphic',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: SECONDARY_COLOR),
-                ),
-              ),
-              SizedBox(height: 20),
-              // TODO Arreglar column con expanded
-              FutureBuilder<AsteroidsModel>(
-                future: fetchAsteroids(pageNumber),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    var asteroids = snapshot.data;
-                    nearEarthObjectsVariable = asteroids.nearEarthObjects;
-                    asteroidList(nearEarthObjectsVariable);
-                    print(nearEarthObjectsVariable[2].nameLimited);
-                    return Container(
-                      height: 600,
-                      child: Column(children: [
-                        Transform.scale(
-                          scale: 1.2,
-                          child: AspectRatio(
-                            aspectRatio: 2.5,
-                            child: Card(
-                              color: PRIMARY_COLOR,
-                              child: ScatterChart(
-                                ScatterChartData(
-                                  scatterSpots: [
-                                    ...readyToUseAsteroidList,
-                                  ],
-                                  minX: 0,
-                                  maxX: 6,
-                                  minY: 0,
-                                  maxY: 7,
-                                  borderData: FlBorderData(
-                                    show: false,
-                                  ),
-                                  gridData: FlGridData(
-                                    show: false,
-                                    drawHorizontalLine: false,
-                                  ),
-                                  titlesData: FlTitlesData(
-                                    show: false,
-                                  ),
-                                  scatterTouchData: ScatterTouchData(
-                                    enabled: false,
-                                    handleBuiltInTouches: false,
-                                    touchCallback:
-                                        (ScatterTouchResponse touchResponse) {
-                                      touchCall(touchResponse);
-                                    },
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [PRIMARY_COLOR, PRIMARY_COLOR.withOpacity(.5)],
+                      stops: [.7, 1])),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: Text(
+                      'Asteroids graphic',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: SECONDARY_COLOR),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  // TODO Arreglar column con expanded
+                  Expanded(
+                    child: FutureBuilder<AsteroidsModel>(
+                      future: fetchAsteroids(pageNumber),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          var asteroids = snapshot.data;
+                          nearEarthObjectsVariable = asteroids.nearEarthObjects;
+                          asteroidList(nearEarthObjectsVariable);
+                          print(nearEarthObjectsVariable[2].nameLimited);
+                          return Column(children: [
+                            Transform.scale(
+                              scale: 1.2,
+                              child: AspectRatio(
+                                aspectRatio: 2.5,
+                                child: Card(
+                                  color: PRIMARY_COLOR,
+                                  child: ScatterChart(
+                                    ScatterChartData(
+                                      scatterSpots: [
+                                        ...readyToUseAsteroidList,
+                                      ],
+                                      minX: 0,
+                                      maxX: 6,
+                                      minY: 0,
+                                      maxY: 7,
+                                      borderData: FlBorderData(
+                                        show: false,
+                                      ),
+                                      gridData: FlGridData(
+                                        show: false,
+                                        drawHorizontalLine: false,
+                                      ),
+                                      titlesData: FlTitlesData(
+                                        show: false,
+                                      ),
+                                      scatterTouchData: ScatterTouchData(
+                                        enabled: false,
+                                        handleBuiltInTouches: false,
+                                        touchCallback: (ScatterTouchResponse
+                                            touchResponse) {
+                                          touchCall(touchResponse);
+                                        },
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                        Expanded(
-                          child: ListView.builder(
-                              itemCount: 10,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                    onTap: () =>
-                                        createInfoDialog(context, index),
-                                    // ListTile en widget aparte
-                                    child: AsteroidListTile(
-                                        nearEarthObjectsVariable:
-                                            nearEarthObjectsVariable,
-                                        neovIndex: index,
-                                        colorList: colorList));
-                              }),
-                        ),
-                        GestureDetector(
-                          onTap: () => {
-                            setState(() {
-                              pageNumber = pageNumber + 1;
-                            })
-                          },
-                          child: Icon(Icons.keyboard_arrow_right),
-                        )
-                      ]),
-                    );
-                  } else {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
+                            Expanded(
+                              child: Stack(
+                                children: [
+                                  ListView.builder(
+                                      itemCount: 10,
+                                      padding: const EdgeInsets.only(
+                                          bottom: 24, top: 16),
+                                      itemBuilder: (context, index) {
+                                        return GestureDetector(
+                                            onTap: () => createInfoDialog(
+                                                context, index),
+                                            // ListTile en widget aparte
+                                            child: AsteroidListTile(
+                                                nearEarthObjectsVariable:
+                                                    nearEarthObjectsVariable,
+                                                neovIndex: index,
+                                                colorList: colorList));
+                                      }),
+                                  Container(
+                                    width: double.infinity,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                          PRIMARY_COLOR,
+                                          PRIMARY_COLOR.withOpacity(.5)
+                                        ],
+                                            stops: [
+                                          .7,
+                                          1
+                                        ])),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ]);
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: GestureDetector(
+                onTap: () => {
+                  setState(() {
+                    //TODO: Limitar paginas
+                    //TODO: Hacer flecha hacia atrás
+                    pageNumber = pageNumber + 1;
+                  })
+                },
+                //TODO: Quitar movida amarilla de arriba al arrastrar la lista
+                child: Container(
+                    width: 40,
+                    height: 40,
+                    color: Colors.transparent,
+                    child: Icon(
+                      Icons.keyboard_arrow_right,
+                      color: Colors.white,
+                    )),
+              ),
+            )
+          ],
         ),
       ),
     );
