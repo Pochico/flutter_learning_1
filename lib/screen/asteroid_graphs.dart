@@ -91,7 +91,6 @@ class _AsteroidGraphState extends State {
                     ),
                   ),
                   SizedBox(height: 20),
-                  // TODO Arreglar column con expanded
                   Expanded(
                     child: FutureBuilder<AsteroidsModel>(
                       future: fetchAsteroids(pageNumber),
@@ -189,29 +188,35 @@ class _AsteroidGraphState extends State {
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: GestureDetector(
-                onTap: () => {
-                  setState(() {
-                    //TODO: Limitar paginas
-                    //TODO: Hacer flecha hacia atrás
-                    pageNumber = pageNumber + 1;
-                  })
-                },
-                //TODO: Quitar movida amarilla de arriba al arrastrar la lista
-                child: Container(
-                    width: 40,
-                    height: 40,
-                    color: Colors.transparent,
-                    child: Icon(
-                      Icons.keyboard_arrow_right,
-                      color: Colors.white,
-                    )),
-              ),
-            )
+            pageNumber > 1 ? Paginator(true) : SizedBox(),
+            Paginator(false),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget Paginator(isLeft) {
+    return Align(
+      alignment: isLeft ? Alignment.bottomLeft : Alignment.bottomRight,
+      child: GestureDetector(
+        onTap: () => {
+          setState(() {
+            //  Limitar paginas
+            // Ahora no da error el límite, he llegado a 40+ pags y ha funcionado
+            pageNumber = isLeft ? pageNumber - 1 : pageNumber + 1;
+          })
+        },
+        //TODO: Quitar movida amarilla de arriba al arrastrar la lista
+        child: Container(
+            width: 50,
+            height: 50,
+            color: Colors.transparent,
+            child: Icon(
+              isLeft ? Icons.keyboard_arrow_left : Icons.keyboard_arrow_right,
+              color: Colors.white,
+              size: 40,
+            )),
       ),
     );
   }

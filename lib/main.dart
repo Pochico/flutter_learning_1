@@ -41,15 +41,21 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: Colors.transparent,
       body: Stack(
         children: [
-          isMainMenuOpen
-              ? Container(
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                    image: AssetImage('assets/images/planet.jpg'),
-                    fit: BoxFit.cover,
-                  )),
-                )
-              : PicOfDay(),
+          AnimatedOpacity(
+            duration: const Duration(milliseconds: 400),
+            opacity: isMainMenuOpen ? 1 : 0,
+            child: Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                image: AssetImage('assets/images/planet.jpg'),
+                fit: BoxFit.cover,
+              )),
+            ),
+          ),
+          AnimatedOpacity(
+              duration: const Duration(milliseconds: 400),
+              opacity: isMainMenuOpen ? 0 : 1,
+              child: PicOfDay()),
           MainMenu(
             isMainMenuOpen: isMainMenuOpen,
             setState: setStateMainMenu,

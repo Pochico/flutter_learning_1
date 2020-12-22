@@ -4,6 +4,7 @@ import 'package:nasa_app/repository/pic_of_day_repository.dart';
 import 'package:nasa_app/model/pic_of_day_model.dart';
 import 'package:nasa_app/widget/arrows_index.dart';
 import 'package:nasa_app/utils/date.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 
 class PicOfDay extends StatefulWidget {
   PicOfDay({Key key}) : super(key: key);
@@ -13,17 +14,21 @@ class PicOfDay extends StatefulWidget {
 }
 
 //TODO Precargar primera imagen del día (poner home y picOfDay en stack y pasar de una a otra con un AnimatedOpacity)
+
 //TODO Caché. Consiste en guardar en un estado un array con los datos de cada día, al ir hacia atrás hace el fetch pero al voler hacia alante primero comprueba si hay datos de ese día guardados y los coge, sino hace el fetch
+
 class _PicOfDayState extends State<PicOfDay> {
   bool isTodayDate = true;
   String currentDayString;
   DateTime currentDay = DateTime.now();
   bool _readingOpacity = false;
+  List<PicOfDayModel> cachedImages = [];
 
   @override
   void initState() {
     super.initState();
     dateTimeToString(currentDay);
+    // _myFetch = _fetchData();
     setState(() {
       currentDayString = dateTimeToString(currentDay);
     });
@@ -31,17 +36,22 @@ class _PicOfDayState extends State<PicOfDay> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: solucionar el doble run del futurebuilder, rellena 2 veces el cachedimages
     return FutureBuilder<PicOfDayModel>(
         future: fetchAlbum(currentDayString),
         builder: (context, snapshot) {
           final data = snapshot.data;
           if (snapshot.hasData) {
+            cachedImages.contains(snapshot.data)
+                ? print('')
+                : cachedImages.add(snapshot.data);
+            print(cachedImages);
             return Stack(children: [
               data.url.contains('apod.nasa')
                   ? Container(
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                        image: NetworkImage(data.url),
+                        image: NetworkImage(snapshot.data.url),
                         fit: BoxFit.cover,
                       )),
                     )
@@ -168,4 +178,12 @@ class _PicOfDayState extends State<PicOfDay> {
       compareDate(dateToCompare) ? isTodayDate = true : isTodayDate = false;
     });
   }
+
+  // void _fetchData() async {
+  //   await fetchAlbum(currentDayString);
+  // }
+
+  // Solución que no acabo de asociar a mi caso para el doble build del FutureBuilder
+  // https://stackoverflow.com/questions/58664293/futurebuilder-runs-twice
+
 }

@@ -29,7 +29,7 @@ class AsteroidListTile extends StatelessWidget {
                               .maxDiameter *
                           100)
                       .toStringAsFixed(3) +
-                  ' m',
+                  ' mØ',
               style: TextStyle(
                   fontWeight: FontWeight.bold, color: colorList[neovIndex]))
         ],
