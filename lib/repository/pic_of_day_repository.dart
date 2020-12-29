@@ -11,7 +11,6 @@ Future<PicOfDayModel> fetchAlbum(String fecha) async {
     if (response.statusCode == 200) {
       var respuesta = PicOfDayModel.fromJson(jsonDecode(response.body));
 
-      print(respuesta.url);
       return respuesta;
     } else {
       print('FetchAlbum statusCode = ' + response.statusCode.toString());

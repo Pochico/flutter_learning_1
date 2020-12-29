@@ -99,7 +99,6 @@ class _AsteroidGraphState extends State {
                           var asteroids = snapshot.data;
                           nearEarthObjectsVariable = asteroids.nearEarthObjects;
                           asteroidList(nearEarthObjectsVariable);
-                          print(nearEarthObjectsVariable[2].nameLimited);
                           return Column(children: [
                             Transform.scale(
                               scale: 1.2,
@@ -202,8 +201,6 @@ class _AsteroidGraphState extends State {
       child: GestureDetector(
         onTap: () => {
           setState(() {
-            //  Limitar paginas
-            // Ahora no da error el límite, he llegado a 40+ pags y ha funcionado
             pageNumber = isLeft ? pageNumber - 1 : pageNumber + 1;
           })
         },
@@ -299,18 +296,6 @@ class _AsteroidGraphState extends State {
                       style: TextStyle(
                           fontSize: FONT_SIZE, fontWeight: FONT_WEIGHT),
                     ),
-                    // Expanded(
-                    //   child: ListView.builder(
-                    //     itemCount: 5,
-                    //     itemBuilder: (context, indice) {
-                    //       ListTile(
-                    //         title: Text(nearEarthObjectsVariable[index]
-                    //             .closeApproach
-                    //             .toString()),
-                    //       );
-                    //     },
-                    //   ),
-                    // )
                   ],
                 ),
               ),

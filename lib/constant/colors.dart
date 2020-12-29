@@ -1,9 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:nasa_app/utils/shared_preferences.dart';
 
 // Colores APP
-const PRIMARY_COLOR = Color(0xFF17161b);
-const PRIMARY_COLOR_SHADE = Color(0xFF242C2F);
-const SECONDARY_COLOR = Color(0xFFf2c902);
+Color PRIMARY_COLOR = Colors.black;
+Color PRIMARY_COLOR_SHADE = Colors.black;
+Color SECONDARY_COLOR = Colors.black;
+
+Future<bool> getSharedPreferences() async {
+  final prefs = await SharedPreferences.getInstance();
+  final darkTheme = prefs.getBool('dark_theme');
+  if (darkTheme == true) {
+    PRIMARY_COLOR = Color(0xFF17161b);
+    PRIMARY_COLOR_SHADE = Color(0xFF242C2F);
+    SECONDARY_COLOR = Color(0xFFf2c902);
+  } else {
+    PRIMARY_COLOR = Color(0xFF17161b);
+    PRIMARY_COLOR_SHADE = Color(0xFF242C2F);
+    SECONDARY_COLOR = Color(0xFFf2c902);
+  }
+  return darkTheme;
+}
 
 // Colores gráfica Asteroides
 const ASTEROID_COLOR_1 = Color(0xFF6FACC8);

@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nasa_app/constant/colors.dart';
 import 'package:nasa_app/screen/asteroid_graphs.dart';
+import 'package:nasa_app/screen/settings.dart';
 import 'package:nasa_app/screen/solar_system.dart';
 import 'package:nasa_app/screen/rover_mars.dart';
+import 'package:nasa_app/utils/shared_preferences.dart';
 import 'package:nasa_app/widget/clip_path.dart';
 
 class MainMenu extends StatefulWidget {
@@ -73,6 +75,7 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
           mainMenuNavigationButton('Sistema Solar', SolarSystem()),
           mainMenuNavigationButton('Rover de Marte', RoverMars()),
           mainMenuNavigationButton('Gráficas de asteroides', AsteroidGraph()),
+          mainMenuNavigationButton('Ajustes', SettingsScreen()),
         ]),
       ),
     );
@@ -112,26 +115,34 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
   }
 
   Widget mainMenuNavigationButton(String titulo, Widget widget) {
-    return ButtonTheme(
-      minWidth: 140,
+    return Container(
+      width: 240,
       child: RaisedButton(
           color: Color(0xFF17161b),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
           ),
-          child: Text(
-            titulo,
-            style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFFf2c902)),
-          ),
-          onPressed: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => widget),
+          child: titulo == 'Ajustes'
+              ? Center(
+                  child: Lottie.asset(
+                  'assets/animations/settings.json',
+                  width: 30,
+                ))
+              : Text(
+                  titulo,
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFf2c902)),
                 ),
-              }),
+          onPressed: titulo == 'Ajustes'
+              ? () => getTheme()
+              : () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => widget),
+                    ),
+                  }),
     );
   }
 }

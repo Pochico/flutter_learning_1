@@ -24,8 +24,6 @@ class _SolarSystemState extends State<SolarSystem> {
           future: fetchSolarSystem(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print('snapshot good');
-              print(snapshot.data.solarSystem[0]);
               List<PlanetModel> solarSystem = snapshot.data.solarSystem;
               return Container(
                 height: double.infinity,
@@ -133,16 +131,6 @@ class _SolarSystemState extends State<SolarSystem> {
                                           ),
                                         ),
                                       ),
-                                      // GestureDetector(
-                                      //   onTap: () => {
-                                      //     print(solarSystem[index].name +
-                                      //         ' was tapped')
-                                      //   },
-                                      //   child: Icon(
-                                      //     Icons.keyboard_arrow_down,
-                                      //     color: Colors.white,
-                                      //   ),
-                                      // )
                                     ],
                                   ),
                                 ])),
@@ -153,7 +141,6 @@ class _SolarSystemState extends State<SolarSystem> {
               );
             } else {
               print('snapshot bad');
-              print(snapshot);
               return Center(
                 child: CircularProgressIndicator(),
               );

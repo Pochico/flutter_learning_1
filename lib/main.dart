@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nasa_app/constant/colors.dart';
 import 'package:nasa_app/screen/pic_of_day.dart';
+import 'package:nasa_app/utils/shared_preferences.dart';
 import 'package:nasa_app/widget/main_menu.dart';
 
 void main() {
@@ -34,6 +36,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool isMainMenuOpen = true;
   bool isPrevArrow = true;
+
+  @override
+  void initState() {
+    super.initState();
+    initSharedPreferences(true);
+    getSharedPreferences();
+  }
 
   @override
   Widget build(BuildContext context) {
