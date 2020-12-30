@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-// TODO: Estudiarme este código para saber perfectamente cómo funciona.
-
 class SolarSystemModel {
   final List<PlanetModel> solarSystem;
 

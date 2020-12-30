@@ -204,7 +204,6 @@ class _AsteroidGraphState extends State {
             pageNumber = isLeft ? pageNumber - 1 : pageNumber + 1;
           })
         },
-        //TODO: Quitar movida amarilla de arriba al arrastrar la lista
         child: Container(
             width: 50,
             height: 50,
