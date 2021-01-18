@@ -14,11 +14,11 @@ class Calendar extends StatelessWidget {
           height: 60,
           width: 60,
           decoration: BoxDecoration(
-            color: PRIMARY_COLOR,
+            color: primaryColor,
             borderRadius: BorderRadius.circular(100.0),
           ),
           child: Icon(Icons.calendar_today_outlined,
-              size: 32, color: Color(0xFFf2c902)),
+              size: 32, color: secondaryColor),
         ),
         onTap: () {
           datePicker(context, setState, currentDay);

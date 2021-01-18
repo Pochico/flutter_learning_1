@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     initSharedPreferences(true);
-    getSharedPreferences();
+    getTheme();
   }
 
   @override

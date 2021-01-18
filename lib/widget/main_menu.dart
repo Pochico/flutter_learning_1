@@ -6,7 +6,6 @@ import 'package:nasa_app/screen/asteroid_graphs.dart';
 import 'package:nasa_app/screen/settings.dart';
 import 'package:nasa_app/screen/solar_system.dart';
 import 'package:nasa_app/screen/rover_mars.dart';
-import 'package:nasa_app/utils/shared_preferences.dart';
 import 'package:nasa_app/widget/clip_path.dart';
 
 class MainMenu extends StatefulWidget {
@@ -31,7 +30,7 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
       upperBound: 0.2,
       vsync: this,
     );
-    animationController.value = 0.2;
+    animationController.value = 0.6;
     super.initState();
   }
 
@@ -93,21 +92,17 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
         alignment: Alignment.center,
         width: 48,
         height: 48,
-        child:
-            /*Icon(
-            widget.isMainMenuOpen
-                ? Icons.keyboard_arrow_down
-                : Icons.keyboard_arrow_up,
-            size: 40,
-            color: Colors.white),*/
-            Center(
-                child: Lottie.asset(
-          'assets/animations/arrow.json',
-          controller: animationController,
-          width: 30,
-        )),
+        child: Center(
+            child: Lottie.asset('assets/animations/arrow.json',
+                controller: animationController,
+                width: 30,
+                delegates: LottieDelegates(values: [
+                  ValueDelegate.color(
+                      const ['ADBE Vector Graphic - Stroke', '**'],
+                      value: secondaryColor)
+                ]))),
         decoration: BoxDecoration(
-          color: PRIMARY_COLOR,
+          color: primaryColor,
           borderRadius: BorderRadius.circular(100),
         ),
       ),
@@ -118,7 +113,7 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
     return Container(
       width: 240,
       child: RaisedButton(
-          color: Color(0xFF17161b),
+          color: buttonColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
           ),
@@ -133,16 +128,14 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
                   style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFf2c902)),
+                      color: secondaryColor),
                 ),
-          onPressed: titulo == 'Ajustes'
-              ? () => getTheme()
-              : () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => widget),
-                    ),
-                  }),
+          onPressed: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => widget),
+                ),
+              }),
     );
   }
 }
