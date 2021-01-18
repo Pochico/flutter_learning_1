@@ -4,9 +4,6 @@ import 'package:nasa_app/constant/colors.dart';
 import 'package:nasa_app/model/asteroids_model.dart';
 import 'package:nasa_app/repository/asteroids_repository.dart';
 import 'package:nasa_app/widget/asteroid_list_tile.dart';
-import 'package:nasa_app/widget/calendar.dart';
-import 'package:nasa_app/utils/date.dart';
-import 'package:nasa_app/widget/clip_path.dart';
 
 class AsteroidGraph extends StatefulWidget {
   @override
@@ -75,7 +72,7 @@ class _AsteroidGraphState extends State {
                   gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [PRIMARY_COLOR, PRIMARY_COLOR.withOpacity(.5)],
+                      colors: [primaryColor, primaryColor.withOpacity(.5)],
                       stops: [.7, 1])),
               child: Column(
                 children: [
@@ -87,7 +84,7 @@ class _AsteroidGraphState extends State {
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: SECONDARY_COLOR),
+                          color: secondaryColor),
                     ),
                   ),
                   SizedBox(height: 20),
@@ -105,7 +102,7 @@ class _AsteroidGraphState extends State {
                               child: AspectRatio(
                                 aspectRatio: 2.5,
                                 child: Card(
-                                  color: PRIMARY_COLOR,
+                                  color: primaryColor,
                                   child: ScatterChart(
                                     ScatterChartData(
                                       scatterSpots: [
@@ -164,8 +161,8 @@ class _AsteroidGraphState extends State {
                                             begin: Alignment.topCenter,
                                             end: Alignment.bottomCenter,
                                             colors: [
-                                          PRIMARY_COLOR,
-                                          PRIMARY_COLOR.withOpacity(.5)
+                                          primaryColor,
+                                          primaryColor.withOpacity(.5)
                                         ],
                                             stops: [
                                           .7,
@@ -210,7 +207,7 @@ class _AsteroidGraphState extends State {
             color: Colors.transparent,
             child: Icon(
               isLeft ? Icons.keyboard_arrow_left : Icons.keyboard_arrow_right,
-              color: Colors.white,
+              color: secondaryColor,
               size: 40,
             )),
       ),

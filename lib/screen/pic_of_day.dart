@@ -135,7 +135,7 @@ class _PicOfDayState extends State<PicOfDay> {
                         height: 40,
                         width: 40,
                         decoration: BoxDecoration(
-                          color: PRIMARY_COLOR.withOpacity(0.5),
+                          color: primaryColor.withOpacity(0.5),
                           borderRadius: BorderRadius.circular(100),
                           border: Border.all(width: 2.0, color: Colors.grey),
                         ),

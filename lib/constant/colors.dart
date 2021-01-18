@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:nasa_app/utils/shared_preferences.dart';
 
 // Colores APP
-Color PRIMARY_COLOR = Colors.black;
-Color PRIMARY_COLOR_SHADE = Colors.black;
-Color SECONDARY_COLOR = Colors.black;
+Color primaryColor = Color(0xFF17161b);
+Color primaryColorShade = Color(0xFF242C2F);
+Color secondaryColor = Color(0xFFf2c902);
+Color buttonColor;
 
-Future<bool> getSharedPreferences() async {
+Future<bool> getTheme() async {
   final prefs = await SharedPreferences.getInstance();
   final darkTheme = prefs.getBool('dark_theme');
   if (darkTheme == true) {
-    PRIMARY_COLOR = Color(0xFF17161b);
-    PRIMARY_COLOR_SHADE = Color(0xFF242C2F);
-    SECONDARY_COLOR = Color(0xFFf2c902);
+    primaryColor = Color(0xFF17161b);
+    primaryColorShade = Color(0xFF242C2F);
+    secondaryColor = Color(0xFFf2c902);
+    buttonColor = primaryColor;
   } else {
-    PRIMARY_COLOR = Color(0xFF17161b);
-    PRIMARY_COLOR_SHADE = Color(0xFF242C2F);
-    SECONDARY_COLOR = Color(0xFFf2c902);
+    primaryColor = Color(0xFFFFCC66);
+    primaryColorShade = Color(0xFFb1cdce);
+    secondaryColor = Color(0xFF17161b);
+    buttonColor = primaryColor;
   }
   return darkTheme;
 }

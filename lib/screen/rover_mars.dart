@@ -9,7 +9,7 @@ import 'package:nasa_app/screen/rover_mars_detail.dart';
 import 'package:nasa_app/widget/calendar.dart';
 import 'package:nasa_app/widget/clip_path.dart';
 
-final colorBase = PRIMARY_COLOR.withOpacity(.5);
+final colorBase = primaryColor.withOpacity(.5);
 
 class RoverMars extends StatefulWidget {
   RoverMars({Key key}) : super(key: key);
@@ -151,7 +151,7 @@ class _RoverMarsState extends State<RoverMars> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFFf2c902),
+                    color: secondaryColor,
                   ),
                 )),
           ),
@@ -171,21 +171,19 @@ class _RoverMarsState extends State<RoverMars> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Text(
-                  'Rovers Curiosity',
-                  style: TextStyle(
+                child: Text('Rovers Curiosity',
+                    style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFf2c902)),
-                ),
+                      color: secondaryColor,
+                    )),
               ),
-              Text(
-                dateTimeToString(currentDay),
-                style: TextStyle(
+              Text(dateTimeToString(currentDay),
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xFFf2c902)),
-              ),
+                    color: secondaryColor,
+                  )),
             ],
           ),
         ),

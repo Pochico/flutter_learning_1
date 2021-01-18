@@ -28,7 +28,7 @@ class _SolarSystemState extends State<SolarSystem> {
               return Container(
                 height: double.infinity,
                 width: double.infinity,
-                color: PRIMARY_COLOR,
+                color: primaryColor,
                 child: ListView.builder(
                     itemCount: snapshot.data.solarSystem.length,
                     itemBuilder: (context, index) {
@@ -39,7 +39,7 @@ class _SolarSystemState extends State<SolarSystem> {
                             borderRadius: BorderRadius.circular(6),
                             child: Container(
                                 height: 220,
-                                color: PRIMARY_COLOR_SHADE,
+                                color: primaryColorShade,
                                 child: Stack(children: [
                                   Transform.translate(
                                     offset: const Offset(220, -30),
@@ -52,7 +52,7 @@ class _SolarSystemState extends State<SolarSystem> {
                                       Text(
                                         solarSystem[index].name,
                                         style: TextStyle(
-                                            color: Colors.white,
+                                            color: secondaryColor,
                                             fontSize: 18,
                                             height: 2),
                                       ),
@@ -63,7 +63,7 @@ class _SolarSystemState extends State<SolarSystem> {
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(4),
-                                            color: PRIMARY_COLOR,
+                                            color: primaryColor,
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
@@ -78,7 +78,7 @@ class _SolarSystemState extends State<SolarSystem> {
                                                           .toString() +
                                                       ' Km',
                                                   style: TextStyle(
-                                                      color: Colors.white,
+                                                      color: secondaryColor,
                                                       height: 1.6),
                                                 ),
                                                 Text(
@@ -88,7 +88,7 @@ class _SolarSystemState extends State<SolarSystem> {
                                                           .toString() +
                                                       ' g/cm³',
                                                   style: TextStyle(
-                                                      color: Colors.white,
+                                                      color: secondaryColor,
                                                       height: 1.6),
                                                 ),
                                                 Text(
@@ -96,7 +96,7 @@ class _SolarSystemState extends State<SolarSystem> {
                                                       solarSystem[index].mass +
                                                       ' MØ',
                                                   style: TextStyle(
-                                                      color: Colors.white,
+                                                      color: secondaryColor,
                                                       height: 1.6),
                                                 ),
                                                 Text(
@@ -105,7 +105,7 @@ class _SolarSystemState extends State<SolarSystem> {
                                                           .gravity +
                                                       ' N/km',
                                                   style: TextStyle(
-                                                      color: Colors.white,
+                                                      color: secondaryColor,
                                                       height: 1.6),
                                                 ),
                                                 Text(
@@ -114,7 +114,7 @@ class _SolarSystemState extends State<SolarSystem> {
                                                           .dayLength +
                                                       ' Hours',
                                                   style: TextStyle(
-                                                      color: Colors.white,
+                                                      color: secondaryColor,
                                                       height: 1.6),
                                                 ),
                                                 Text(
@@ -123,7 +123,7 @@ class _SolarSystemState extends State<SolarSystem> {
                                                           .sunDistance +
                                                       ' Km',
                                                   style: TextStyle(
-                                                      color: Colors.white,
+                                                      color: secondaryColor,
                                                       height: 1.6),
                                                 ),
                                               ],
