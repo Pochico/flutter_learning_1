@@ -1,20 +1,13 @@
+import 'package:nasa_app/constant/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void initSharedPreferences(bool themeAnimationValue) async {
+void themeSharedPreferences(bool themeValue) async {
   final prefs = await SharedPreferences.getInstance();
-  await prefs.setBool('dark_theme', themeAnimationValue);
+  await prefs.setBool('is_dark_theme', themeValue);
+  setTheme();
 }
 
-// Future<bool> getSwitchAnimationController() async {
-//   final prefs = await SharedPreferences.getInstance();
-//   final switchAnimationController = prefs.getBool('animation_controller');
-//   return switchAnimationController;
-// }
-
-// void getTheme() async {
-//   final pref = await SharedPreferences.getInstance();
-//   bool darkTheme = pref.getBool('dark_theme');
-//   print(darkTheme);
-// }
-
-// mirar el async del initSharedPreferences en el init state
+void julenNoEsTontoPreference(bool value) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setBool('is_julen_tonto', value);
+}

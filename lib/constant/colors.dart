@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Colores APP
-Color primaryColor = Color(0xFF17161b);
-Color primaryColorShade = Color(0xFF242C2F);
-Color secondaryColor = Color(0xFFf2c902);
+Color primaryColor = Colors.red; //Color(0xFF17161b);
+Color primaryColorShade = Colors.red; //Color(0xFF242C2F);
+Color secondaryColor = Colors.red; //Color(0xFFf2c902);
 Color buttonColor;
 
-Future<bool> getTheme() async {
+Future<void> setTheme() async {
   final prefs = await SharedPreferences.getInstance();
-  final darkTheme = prefs.getBool('dark_theme');
+  final darkTheme = prefs.getBool('is_dark_theme');
   if (darkTheme == true) {
     primaryColor = Color(0xFF17161b);
     primaryColorShade = Color(0xFF242C2F);
@@ -21,7 +21,6 @@ Future<bool> getTheme() async {
     secondaryColor = Color(0xFF17161b);
     buttonColor = primaryColor;
   }
-  return darkTheme;
 }
 
 // Colores gráfica Asteroides

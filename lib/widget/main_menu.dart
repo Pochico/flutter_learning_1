@@ -119,10 +119,11 @@ class _MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
           ),
           child: titulo == 'Ajustes'
               ? Center(
-                  child: Lottie.asset(
-                  'assets/animations/settings.json',
-                  width: 30,
-                ))
+                  child: Lottie.asset('assets/animations/settings.json',
+                      width: 30,
+                      delegates: LottieDelegates(values: [
+                        ValueDelegate.color(const ['**'], value: Colors.white),
+                      ])))
               : Text(
                   titulo,
                   style: TextStyle(

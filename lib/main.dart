@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:nasa_app/constant/colors.dart';
 import 'package:nasa_app/screen/pic_of_day.dart';
 import 'package:nasa_app/utils/shared_preferences.dart';
@@ -40,10 +41,19 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    initSharedPreferences(true);
-    getTheme();
-    WidgetsBinding.instance.addPostFrameCallback((_) =>
-        {setState(() => {})}); //lanza la función después de construir el layout
+    themeExist();
+    // WidgetsBinding.instance.addPostFrameCallback((_) =>     {setState(() => {})}); //lanza la función después de construir el layout
+  }
+
+  void themeExist() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isDarkTheme = prefs.getBool('is_dark_theme');
+    if (isDarkTheme == null) {
+      themeSharedPreferences(true);
+    } else {
+      setTheme();
+    }
+    setState(() {});
   }
 
   @override
