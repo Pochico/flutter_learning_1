@@ -1,9 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-void initSharedPreferences(bool themeValue) async {
+void initSharedPreferences(bool themeAnimationValue) async {
   final prefs = await SharedPreferences.getInstance();
-  await prefs.setBool('dark_theme', themeValue);
-  // await prefs.setBool('animation_controller', animationValue);
+  await prefs.setBool('dark_theme', themeAnimationValue);
 }
 
 // Future<bool> getSwitchAnimationController() async {
@@ -17,3 +16,5 @@ void initSharedPreferences(bool themeValue) async {
 //   bool darkTheme = pref.getBool('dark_theme');
 //   print(darkTheme);
 // }
+
+// mirar el async del initSharedPreferences en el init state

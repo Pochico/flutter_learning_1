@@ -42,6 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     initSharedPreferences(true);
     getTheme();
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
+        {setState(() => {})}); //lanza la función después de construir el layout
   }
 
   @override
